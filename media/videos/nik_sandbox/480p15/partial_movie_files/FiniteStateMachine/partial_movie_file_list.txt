@@ -1,0 +1,5 @@
+# This file is used internally by FFMPEG.
+file 'file:/Users/nikyakovlev/finite_state_machine/media/videos/nik_sandbox/480p15/partial_movie_files/FiniteStateMachine/1185818338_441991084_223132457.mp4'
+file 'file:/Users/nikyakovlev/finite_state_machine/media/videos/nik_sandbox/480p15/partial_movie_files/FiniteStateMachine/624642324_1332097467_3926746225.mp4'
+file 'file:/Users/nikyakovlev/finite_state_machine/media/videos/nik_sandbox/480p15/partial_movie_files/FiniteStateMachine/624642324_1513186060_248494864.mp4'
+file 'file:/Users/nikyakovlev/finite_state_machine/media/videos/nik_sandbox/480p15/partial_movie_files/FiniteStateMachine/624642324_784179552_1000349644.mp4'
