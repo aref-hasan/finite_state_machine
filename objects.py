@@ -48,10 +48,6 @@ class objects(Scene):
         self.clear()
 
     def topics_listing(self):
-        title = Text("K-means clustering and Logistic Regression", color=WHITE)
-        title.scale(0.75)
-        self.add(title.to_edge(UP))
-
         text1 = Text("1. THEMA").set_color(WHITE)
 
         text2 = Text("2. THEMA").set_color(WHITE)
