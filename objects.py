@@ -2,12 +2,16 @@ from manim import *
 from manim import Scene
 
 class objects(Scene):
+    #hier auskommentieren was abgespielt werden sollte
     def construct(self):
-        self.greeting()
-        self.table_open()
-        self.table()
-        self.rahmen()
-        self.topics_listing()
+        #self.greeting()
+        #self.table_open()
+        #self.table()
+        #self.rahmen()
+        #self.topics_listing()
+        #self.circel_state()
+        #self.circel_x()
+        self.circel_final_state()
 
     def greeting(self):
         text = Text("Hallo Zusammen!", font_size= 50)
@@ -60,5 +64,35 @@ class objects(Scene):
         x.set_opacity(0.5)
         x.submobjects[1].set_opacity(1)
         self.add(x)
+        self.wait(2)
+        self.clear()
+
+    def circel_state(self):
+        circle = Circle(radius=0.6, color=BLUE)
+
+        self.play(Create(circle)) 
+
+        self.wait(1)
+        self.clear()
+
+    def circel_x(self):
+        circle = Circle(radius=0.6, color=BLUE)
+
+        line1 = Line(start=circle.get_left(), end=circle.get_right(), color=BLUE)
+        line2 = Line(start=circle.get_bottom(), end=circle.get_top(), color=BLUE)
+
+        self.play(Create(circle))
+        self.play(Create(line1), Create(line2))
+        self.wait(2)
+        self.clear()
+
+    def circel_final_state(self):
+        outer_circle = Circle(radius=0.6, color=BLUE)
+
+        inner_circle = Circle(radius=0.42, color=BLUE)
+
+        inner_circle.move_to(outer_circle.get_center())
+        self.play(Create(outer_circle))
+        self.play(Create(inner_circle))
         self.wait(2)
         self.clear()
