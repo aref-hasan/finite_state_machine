@@ -11,7 +11,8 @@ class objects(Scene):
         #self.topics_listing()
         #self.circel_state()
         #self.circel_x()
-        self.circel_final_state()
+        #self.circel_final_state()
+        self.test()
 
     def greeting(self):
         text = Text("Hallo Zusammen!", font_size= 50)
@@ -96,3 +97,32 @@ class objects(Scene):
         self.play(Create(inner_circle))
         self.wait(2)
         self.clear()
+
+    def test(self):
+        # Erstellen Sie einen Kreis
+        circle = Circle(color=RED)
+        self.play(Create(circle))
+
+        # Bestimmen Sie den Radius des Kreises und den Winkel in Radiant
+        radius = circle.width / 2
+        angle = 45 * DEGREES  # Keine Umwandlung notwendig
+
+        # Berechnen Sie den Startpunkt mit trigonometrischen Funktionen
+        start_x = radius * np.cos(angle)
+        start_y = radius * np.sin(angle)
+        start_point = circle.get_center() + np.array([start_x, start_y, 4])
+
+        end_angle = angle + 2 
+        end_x = radius * np.cos(end_angle)
+        end_y = radius * np.sin(end_angle)
+        end_point = circle.get_center() + np.array([end_x, end_y, 0])
+
+        # Erstellen Sie den Pfeil
+        arrow = CurvedArrow(start_point, end_point, color=WHITE)
+        self.play(Create(arrow))
+
+        self.wait(1)
+
+
+
+
