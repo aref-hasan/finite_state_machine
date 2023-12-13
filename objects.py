@@ -1,7 +1,7 @@
 from manim import *
 from manim import Scene
 
-class Intro(Scene):
+class objects(Scene):
     def construct(self):
         self.greeting()
         self.table_open()
