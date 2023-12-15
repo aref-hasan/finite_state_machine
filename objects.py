@@ -9,10 +9,10 @@ class objects(Scene):
         #self.table()
         #self.rahmen()
         #self.topics_listing()
-        #self.circel_state()
-        #self.circel_x()
-        #self.circel_final_state()
-        self.test()
+        #self.circle_state()
+        #self.circle_x()
+        #self.circle_final_state()
+        self.circle_self()
 
     def greeting(self):
         text = Text("Hallo Zusammen!", font_size= 50)
@@ -68,7 +68,7 @@ class objects(Scene):
         self.wait(2)
         self.clear()
 
-    def circel_state(self):
+    def circle_state(self):
         circle = Circle(radius=0.6, color=BLUE)
 
         self.play(Create(circle)) 
@@ -76,7 +76,7 @@ class objects(Scene):
         self.wait(1)
         self.clear()
 
-    def circel_x(self):
+    def circle_x(self):
         circle = Circle(radius=0.6, color=BLUE)
 
         line1 = Line(start=circle.get_left(), end=circle.get_right(), color=BLUE)
@@ -87,7 +87,7 @@ class objects(Scene):
         self.wait(2)
         self.clear()
 
-    def circel_final_state(self):
+    def circle_final_state(self):
         outer_circle = Circle(radius=0.6, color=BLUE)
 
         inner_circle = Circle(radius=0.42, color=BLUE)
@@ -98,27 +98,23 @@ class objects(Scene):
         self.wait(2)
         self.clear()
 
-    def test(self):
-        # Erstellen Sie einen Kreis
+    def circle_self(self):
         circle = Circle(color=RED)
         self.play(Create(circle))
 
-        # Bestimmen Sie den Radius des Kreises und den Winkel in Radiant
-        radius = circle.width / 2
-        angle = 45 * DEGREES  # Keine Umwandlung notwendig
+        radius = circle.width / 1.5
+        angle = 52 * DEGREES  
 
-        # Berechnen Sie den Startpunkt mit trigonometrischen Funktionen
-        start_x = radius * np.cos(angle)
-        start_y = radius * np.sin(angle)
-        start_point = circle.get_center() + np.array([start_x, start_y, 4])
+        start_x = radius * np.cos(angle)/ 1.6
+        start_y = radius * np.sin(angle) 
+        start_point = circle.get_center() + np.array([start_x, start_y, 5])
 
-        end_angle = angle + 2 
-        end_x = radius * np.cos(end_angle)
+        end_angle = angle + 45.5
+        end_x = radius * np.cos(end_angle) / 1.6 
         end_y = radius * np.sin(end_angle)
-        end_point = circle.get_center() + np.array([end_x, end_y, 0])
+        end_point = circle.get_center() + np.array([end_x, end_y, 2])
 
-        # Erstellen Sie den Pfeil
-        arrow = CurvedArrow(start_point, end_point, color=WHITE)
+        arrow = CurvedArrow(start_point, end_point, color=WHITE, angle= 3)
         self.play(Create(arrow))
 
         self.wait(1)
