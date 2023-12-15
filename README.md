@@ -1,2 +1,4 @@
 # finite_state_machine
-Coming soon
+
+Katharina Thiel, Nik Yakovlev, Aref Hasan
+WWI-21-DSA
