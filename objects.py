@@ -2,13 +2,18 @@ from manim import *
 from manim import Scene
 
 class objects(Scene):
+    #hier auskommentieren was abgespielt werden sollte
     def construct(self):
-        self.greeting()
-        self.table_open()
-        self.table()
-        self.rahmen()
-        self.topics_listing()
-
+        #self.greeting()
+        #self.table_open()
+        #self.table()
+        #self.rahmen()
+        #self.topics_listing()
+        #self.circle_state()
+        #self.circle_x()
+        #self.circle_final_state()
+        #self.circle_self()
+        self.circle_self1()
     def greeting(self):
         text = Text("Hallo Zusammen!", font_size= 50)
         self.play(Write(text))
@@ -62,3 +67,86 @@ class objects(Scene):
         self.add(x)
         self.wait(2)
         self.clear()
+
+    def circle_state(self):
+        circle = Circle(radius=0.6, color=BLUE)
+
+        self.play(Create(circle)) 
+
+        self.wait(1)
+        self.clear()
+
+    def circle_x(self):
+        circle = Circle(radius=0.6, color=BLUE)
+
+        line1 = Line(start=circle.get_left(), end=circle.get_right(), color=BLUE)
+        line2 = Line(start=circle.get_bottom(), end=circle.get_top(), color=BLUE)
+
+        self.play(Create(circle))
+        self.play(Create(line1), Create(line2))
+        self.wait(2)
+        self.clear()
+
+    def circle_final_state(self):
+        outer_circle = Circle(radius=0.6, color=BLUE)
+
+        inner_circle = Circle(radius=0.42, color=BLUE)
+
+        inner_circle.move_to(outer_circle.get_center())
+        self.play(Create(outer_circle))
+        self.play(Create(inner_circle))
+        self.wait(2)
+        self.clear()
+
+    def circle_self(self):
+        circle = Circle(color=RED)
+        self.play(Create(circle))
+
+        radius = circle.width / 1.5
+        angle = 52 * DEGREES  
+
+        start_x = radius * np.cos(angle)/ 1.6
+        start_y = radius * np.sin(angle) 
+        start_point = circle.get_center() + np.array([start_x, start_y, 5])
+
+        end_angle = angle + 45.5
+        end_x = radius * np.cos(end_angle) / 1.6 
+        end_y = radius * np.sin(end_angle)
+        end_point = circle.get_center() + np.array([end_x, end_y, 2])
+
+        arrow = CurvedArrow(start_point, end_point, color=WHITE, angle= 3)
+        self.play(Create(arrow))
+
+        self.wait(1)
+
+    def circle_self1(self):
+        circle = Circle(color=RED)
+        self.play(Create(circle))
+
+        # Radius des Kreises
+        radius = circle.width / 2
+
+        # Winkel für den Start- und Endpunkt
+        angle = 270 * DEGREES  # Beginnend am unteren Punkt des Kreises
+
+        # Berechnung des Startpunkts auf dem Kreis
+        start_x = radius * np.cos(angle)
+        start_y = radius * np.sin(angle)
+        start_point = circle.get_center() + np.array([start_x, start_y, 0])
+
+        # Berechnung des Endpunkts, ein wenig vom Startpunkt versetzt
+        end_angle = angle - 10 * DEGREES  # Ein kleiner Winkel abziehen, um eine Schleife zu bilden
+        end_x = radius * np.cos(end_angle)
+        end_y = radius * np.sin(end_angle)
+        end_point = circle.get_center() + np.array([end_x, end_y, 0])
+
+        # Erstellen des Pfeils mit einer sichtbaren Krümmung
+        arrow = CurvedArrow(
+            start_point, 
+            end_point, 
+            color=WHITE,
+            angle=TAU/4  # Krümmung des Pfeils
+        )
+        self.play(Create(arrow))
+
+        self.wait(1)
