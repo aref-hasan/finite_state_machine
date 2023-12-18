@@ -12,8 +12,8 @@ class objects(Scene):
         #self.circle_state()
         #self.circle_x()
         #self.circle_final_state()
-        self.circle_self()
-
+        #self.circle_self()
+        self.circle_self1()
     def greeting(self):
         text = Text("Hallo Zusammen!", font_size= 50)
         self.play(Write(text))
@@ -119,6 +119,34 @@ class objects(Scene):
 
         self.wait(1)
 
+    def circle_self1(self):
+        circle = Circle(color=RED)
+        self.play(Create(circle))
 
+        # Radius des Kreises
+        radius = circle.width / 2
 
+        # Winkel für den Start- und Endpunkt
+        angle = 270 * DEGREES  # Beginnend am unteren Punkt des Kreises
 
+        # Berechnung des Startpunkts auf dem Kreis
+        start_x = radius * np.cos(angle)
+        start_y = radius * np.sin(angle)
+        start_point = circle.get_center() + np.array([start_x, start_y, 0])
+
+        # Berechnung des Endpunkts, ein wenig vom Startpunkt versetzt
+        end_angle = angle - 10 * DEGREES  # Ein kleiner Winkel abziehen, um eine Schleife zu bilden
+        end_x = radius * np.cos(end_angle)
+        end_y = radius * np.sin(end_angle)
+        end_point = circle.get_center() + np.array([end_x, end_y, 0])
+
+        # Erstellen des Pfeils mit einer sichtbaren Krümmung
+        arrow = CurvedArrow(
+            start_point, 
+            end_point, 
+            color=WHITE,
+            angle=TAU/4  # Krümmung des Pfeils
+        )
+        self.play(Create(arrow))
+
+        self.wait(1)
