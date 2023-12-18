@@ -62,7 +62,7 @@ class FiniteStateMachine(Scene):
 
         # Keep the scene displayed
         self.wait(2)
-gi
+
         
 
 # manim -pql /Users/nikyakovlev/finite_state_machine/playground/nik_sandbox.py
