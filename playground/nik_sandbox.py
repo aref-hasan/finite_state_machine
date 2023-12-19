@@ -3,9 +3,9 @@ from manim import *
 class FiniteStateMachine(Scene):
     def construct(self):
         # Load states as images
-        state2_img = ImageMobject("../img/pokemon/PNG/charmeleon.png").scale(1)
-        state1_img = ImageMobject("../img/pokemon/PNG/charmander.png").scale(1).next_to(state2_img, LEFT, buff=2)
-        state3_img = ImageMobject("../img/pokemon/PNG/charizard.png").scale(1).next_to(state2_img, RIGHT, buff=2)
+        state2_img = ImageMobject("/Users/nikyakovlev/finite_state_machine/img/pokemon/PNG/charmeleon.png").scale(1)
+        state1_img = ImageMobject("/Users/nikyakovlev/finite_state_machine/img/pokemon/PNG/charmander.png").scale(1).next_to(state2_img, LEFT, buff=2)
+        state3_img = ImageMobject("/Users/nikyakovlev/finite_state_machine/img/pokemon/PNG/charizard.png").scale(1).next_to(state2_img, RIGHT, buff=2)
 
 
         # Define transitions
@@ -62,7 +62,6 @@ class FiniteStateMachine(Scene):
 
         # Keep the scene displayed
         self.wait(2)
-gi
-        
 
+        
 # manim -pql /Users/nikyakovlev/finite_state_machine/playground/nik_sandbox.py
