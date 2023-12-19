@@ -3,9 +3,10 @@ from manim import *
 class FiniteStateMachine(Scene):
     def construct(self):
         # Load states as images
-        state2_img = ImageMobject("/Users/nikyakovlev/finite_state_machine/img/pokemon/PNG/charmeleon.png").scale(1)
-        state1_img = ImageMobject("/Users/nikyakovlev/finite_state_machine/img/pokemon/PNG/charmander.png").scale(1).next_to(state2_img, LEFT, buff=2)
-        state3_img = ImageMobject("/Users/nikyakovlev/finite_state_machine/img/pokemon/PNG/charizard.png").scale(1).next_to(state2_img, RIGHT, buff=2)
+        state2_img = ImageMobject("/Users/nikyakovlev/finite_state_machine/src/img/pokemon/PNG/charmeleon.png").scale(1)
+        state1_img = ImageMobject("/Users/nikyakovlev/finite_state_machine/src/img/pokemon/PNG/charmander.png").scale(1).next_to(state2_img, LEFT, buff=2)
+        state3_img = ImageMobject("/Users/nikyakovlev/finite_state_machine/src/img/pokemon/PNG/charizard.png").scale(1).next_to(state2_img, RIGHT, buff=2)
+        
 
 
         # Define transitions
@@ -46,14 +47,32 @@ class FiniteStateMachine(Scene):
 
         # FSM Components as Text
         fsm_components_text = [
-            MathTex(r"A \text{ finite-state transducer is a sextuple } (\Sigma, \Gamma, S, s_0, \delta, \omega), \text{ where:}").scale(0.5).next_to(state1_img, DOWN, buff=1),
-            MathTex(r"\Sigma \text{ is the input alphabet (a finite non-empty set of symbols);}").scale(0.5).next_to(state1_img, DOWN, buff=1.5),
-            MathTex(r"\Gamma \text{ is the output alphabet (a finite non-empty set of symbols);}").scale(0.5).next_to(state1_img, DOWN, buff=2),
-            MathTex(r"S \text{ is a finite non-empty set of states;}").scale(0.5).next_to(state1_img, DOWN, buff=2.5),
-            MathTex(r"s_0 \text{ is the initial state, an element of } S;").scale(0.5).next_to(state1_img, DOWN, buff=3),
-            MathTex(r"\delta \text{ is the state-transition function: } S \times \Sigma \rightarrow S;").scale(0.5).next_to(state1_img, DOWN, buff=3.5),
-            MathTex(r"\omega \text{ is the output function.}").scale(0.5).next_to(state1_img, DOWN, buff=4)
+            MathTex(r"Ein \text{ endlicher Automat ist ein 5-Tupel } (Q, \Sigma, \delta, q_0, F), \text{ wobei:}").scale(0.5).next_to(state1_img, DOWN, buff=0.5),
+            MathTex(r"Q \text{ ist eine endliche Menge von Zuständen;}").scale(0.5).next_to(state1_img, DOWN, buff=1.5),
+            MathTex(r"\Sigma \text{ ist das Eingabealphabet (eine endliche nicht-leere Menge von Symbolen);}").scale(0.5).next_to(state1_img, DOWN, buff=2.5),
+            MathTex(r"\delta \text{ ist die Zustandsübergangsfunktion: } Q \times \Sigma \rightarrow Q;").scale(0.5).next_to(state1_img, DOWN, buff=3.5),
+            MathTex(r"q_0 \text{ ist der Anfangszustand, ein Element von } Q;").scale(0.5).next_to(state1_img, DOWN, buff=4.5),
+            MathTex(r"F \text{ ist die Menge der Endzustände, eine Teilmenge von } Q.").scale(0.5).next_to(state1_img, DOWN, buff=5.5)
         ]
+
+        # Text parts of the expression
+        text1 = MathTex("Q = \\{").scale(0.5)
+        text2 = MathTex("\\}").scale(0.5)
+
+        # Image objects (replace 'image_path' with the path to your images)
+        image1 = ImageMobject("/Users/nikyakovlev/finite_state_machine/src/img/pokemon/PNG/charmander.png").scale(0.2)
+        image2 = ImageMobject("/Users/nikyakovlev/finite_state_machine/src/img/pokemon/PNG/charmeleon.png").scale(0.2)
+        image3 = ImageMobject("/Users/nikyakovlev/finite_state_machine/src/img/pokemon/PNG/charizard.png").scale(0.2)
+
+        # Positioning the objects
+        text1.next_to(fsm_components_text[1], RIGHT, buff=1)
+        image1.next_to(text1, RIGHT, buff=0.1)
+        image2.next_to(image1, RIGHT, buff=0.1)
+        image3.next_to(image2, RIGHT, buff=0.1)
+        text2.next_to(image3, RIGHT, buff=0.1)
+
+        # Add objects to the scene
+        self.add(text1, image1, image2, image3, text2)
 
         # Display FSM Components
         for text_obj in fsm_components_text:
