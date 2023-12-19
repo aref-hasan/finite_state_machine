@@ -1,4 +1,5 @@
-__pycache__
+extras/
+media 
 playground/media
 playground/__pycache__
 media
