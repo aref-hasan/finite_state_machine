@@ -17,7 +17,7 @@ class Main(MovingCameraScene):
         self.clear()
 
     def vid(self):
-        cap = cv2.VideoCapture("../src/vid/pokeball_transition.mp4")
+        cap = cv2.VideoCapture("../src/vid/pokeball_transition.mp4") #source: https://vfx.productioncrate.com/search/Pokeball+Transition+2&type=vfx
         flag = True
         while flag:
             flag, frame = cap.read()
