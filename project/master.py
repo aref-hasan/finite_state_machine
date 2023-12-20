@@ -1,11 +1,15 @@
 from manim import *
 import cv2
+from manim_voiceover import VoiceoverScene
+from manim.scene.moving_camera_scene import MovingCameraScene
+from manim_voiceover.services.gtts import GTTSService
+from manim_voiceover.services.recorder import RecorderService
 
 class Main(MovingCameraScene):
     def construct(self):
         self.greeting()
         self.vid()
-        
+        self.sound()
     def greeting(self):
         text = Text("Hallo Zusammen!", font_size= 50)
         self.play(Write(text))
@@ -24,3 +28,14 @@ class Main(MovingCameraScene):
                 self.wait(0.04)  # Anpassen für FPS
                 self.remove(frame_img)
         cap.release()
+
+
+    def sound(self):
+        # Erstellen Sie hier Ihre Animation
+        self.play(Write(Text("Hello World!")), run_time=3)
+        
+        # Fügen Sie den Sound hinzu
+        self.add_sound("../src/sounds/pokemon_original.mp3")
+
+        # Weitere Animationen
+        self.play(FadeOut(Text("Hello World!")), run_time=1)
