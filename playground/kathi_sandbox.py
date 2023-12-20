@@ -11,23 +11,23 @@ class video(MovingCameraScene):
         t_titel = Tex('Prüfautomat')
         self.play(self.camera.frame.animate.set(width = t_titel.width*2))
         self.add(t_titel)
-        self.wait(1)
+        self.wait(4)
         self.clear()
         #Show the text of the task
         t_aufgabe_a = Tex(r'Aufgabe: \\ Wir haben ein Handy. \\ Nur mit der richtigen PIN wird das Handy entsperrt.', font_size = 60)
         self.play(self.camera.frame.animate.set(width = t_aufgabe_a.width*2))
         self.add(t_aufgabe_a)
-        self.wait(1)
+        self.wait(4)
         self.clear()
         #Show the inputparameters and the solution
         t_loesung = Tex("Die PIN ist 123").move_to([0,4,0])
         self.add(t_loesung)
         self.play(self.camera.frame.animate.move_to(t_loesung).set_width(t_loesung.width))
-        self.wait(1)
+        self.wait(4)
         t_eingabe = Tex(r"Eingabe:", r" 1,2 oder 3. ").move_to([0,3,0])
         self.add(t_eingabe)
         self.play(self.camera.frame.animate.move_to(t_eingabe).set_width(t_eingabe.width))
-        self.wait(1)
+        self.wait(4)
         #Here no clear since it is necessary for the explanation
         
         #Create all the arrows on the right way
@@ -107,10 +107,10 @@ class video(MovingCameraScene):
         self.play(self.camera.frame.animate.move_to(circle_4).set_width(circle_4.radius*4).set_run_time(2))
         self.wait(1)
         self.play(self.camera.frame.animate.move_to([0.5,-2,0]).set_width(rigth_way.width*1.4))
-        self.wait(2)
+        self.wait(4)
         #Show the complete graph 
         self.play(self.camera.frame.animate.move_to(circle_u).set_width(circle_u.radius*8))
-        self.wait(2)
+        self.wait(4)
 
         #declaration of all the elements or the 1st column 
         liste_rows = [Tex("1,2,3"), Tex("n, eins, zwei, drei, offen, gesperrt"), Tex("n"), Tex("frei"), MathTex( "\delta")]
@@ -141,7 +141,7 @@ class video(MovingCameraScene):
         self.play(self.camera.frame.animate.move_to(t_eingabe).set_width(t_eingabe.width))
         box_1 = SurroundingRectangle(t_eingabe[1])
         self.add(box_1)
-        self.wait(2)
+        self.wait(4)
         self.remove(box_1)
         
 
@@ -156,12 +156,12 @@ class video(MovingCameraScene):
         box_4 = SurroundingRectangle(circle_u)
         box_5 = SurroundingRectangle(circle_4_outer)
         self.play(self.camera.frame.animate.move_to([0.5,-2,0]).set_width(rigth_way.width*1.4))
-        self.wait(1)
+        self.wait(2)
         self.add(box_1,box_2,box_3,box_4,box_5)
-        self.wait(3)
+        self.wait(4)
         self.remove(box_1,box_2,box_3,box_4,box_5)
 
-        self.wait(2)
+        self.wait(4)
 
         #Show Anfangszustand
         t2.set_row_colors(WHITE, WHITE, WHITE, WHITE)
@@ -178,9 +178,9 @@ class video(MovingCameraScene):
         t2.set_row_colors(WHITE, WHITE, WHITE, WHITE, WHITE)
         self.play(self.camera.frame.animate.move_to(t2).set_width(t2.width*2))
         self.add(t2)
-        self.wait(2)
+        self.wait(4)
         self.play(self.camera.frame.animate.move_to([0.5,-2,0]).set_width(rigth_way.width*1.4))
-        self.wait(1)
+        self.wait(4)
         self.add(box_5)
         self.wait(3)
         self.remove(box_5)
@@ -189,6 +189,6 @@ class video(MovingCameraScene):
         t2.set_row_colors(WHITE, WHITE, WHITE, WHITE, WHITE, WHITE)
         self.play(self.camera.frame.animate.move_to(t2).set_width(t2.width*2))
         self.add(t2)
-        self.wait(2)
+        self.wait(4)
         self.play(self.camera.frame.animate.move_to([0.5,-2,0]).set_width(rigth_way.width*1.4))
-        self.wait(5)
+        self.wait(6)
