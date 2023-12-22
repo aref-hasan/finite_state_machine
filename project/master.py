@@ -31,11 +31,8 @@ class Main(MovingCameraScene):
 
 
     def sound(self):
-        # Erstellen Sie hier Ihre Animation
         self.play(Write(Text("Hello World!")), run_time=3)
         
-        # Fügen Sie den Sound hinzu
         self.add_sound("../src/sounds/pokemon_original.mp3")
 
-        # Weitere Animationen
         self.play(FadeOut(Text("Hello World!")), run_time=1)
