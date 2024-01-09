@@ -98,7 +98,7 @@ class objects(Scene):
         self.clear()
 
     def circle_self(self):
-        circle = Circle(color=RED)
+        circle = Circle(radius=0.6, color=BLUE)
         self.play(Create(circle))
 
         radius = circle.width / 1.5
