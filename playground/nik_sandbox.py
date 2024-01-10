@@ -239,11 +239,11 @@ class FiniteStateMachine(Scene):
         label4 = Text("b").next_to(arrow4, DOWN, buff=0.1).scale(0.5)
 
 
-        # Create a white circle around state3_img
+        #  a white circle around state3_img
         circle_around_state3 = Circle(color=BLUE).scale(0.8)
         circle_around_state3.move_to(circle3.get_center())
 
-        # Create a diagonal arrow pointing to state1_img
+        #  a diagonal arrow pointing to state1_img
         start_point = circle1.get_center() + LEFT * 2 + UP * 1  # Adjust as needed
         diagonal_arrow = Arrow(start=start_point, end=state1_img.get_left(), buff=0.1)
 
@@ -287,4 +287,4 @@ class FiniteStateMachine(Scene):
         self.play(Create(arrow))
 
         
-# manim -pql /Users/nikyakovlev/finite_state_machine/playground/nik_sandbox.py
+# manim -pql /Users/nikyakovlev/finite_state_machine/playground/nik_sandbox.pyg
