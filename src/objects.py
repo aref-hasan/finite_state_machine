@@ -12,12 +12,7 @@ class objects(Scene):
         self.circle_state()
         #self.circle_x()
         #self.circle_final_state()
-<<<<<<< HEAD
-        self.circle_self()
-=======
         #self.circle_self()
-        #self.circle_self1()
->>>>>>> nik
     def greeting(self):
         text = Text("Hallo Zusammen!", font_size= 50)
         self.play(Write(text))
