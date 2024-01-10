@@ -203,7 +203,7 @@ class FiniteStateMachine(Scene):
 
         self.clear()
 
-
+        ################################# new image ######################################################
 
         # Position circle2 at the origin (or a specific point)
         circle2 = Circle(radius=0.6, color=BLUE)
@@ -221,31 +221,31 @@ class FiniteStateMachine(Scene):
 
 
        # This will make the arrows shorter
-        arrow1 = Arrow(start=circle1.get_top() + DOWN * 0.5, end=circle2.get_top() + DOWN * 0.5, buff=1)  # Increased buff
-        arrow2 = Arrow(start=circle2.get_top() + DOWN * 0.5, end=circle3.get_top() + DOWN * 0.5, buff=1)  # Increased buff
+        arrow1 = Arrow(start=circle1.get_top() + DOWN * 0.4, end=circle2.get_top() + DOWN * 0.4, buff=0.7)  # Increased buff
+        arrow2 = Arrow(start=circle2.get_top() + DOWN * 0.4, end=circle3.get_top() + DOWN * 0.4, buff=0.7)  # Increased buff
 
         # Create new arrows below the circles pointing in the opposite direction
         # Also with increased buff for shorter arrows
-        arrow3 = Arrow(start=circle2.get_bottom() + UP * 0.5, end=circle1.get_bottom() + UP * 0.5, buff=1)
-        arrow4 = Arrow(start=circle3.get_bottom() + UP * 0.5, end=circle2.get_bottom() + UP * 0.5, buff=1)
+        arrow3 = Arrow(start=circle2.get_bottom() + UP * 0.4, end=circle1.get_bottom() + UP * 0.4, buff=0.7)
+        arrow4 = Arrow(start=circle3.get_bottom() + UP * 0.4, end=circle2.get_bottom() + UP * 0.4, buff=0.7)
 
         label1 = Text("a").next_to(arrow1, UP, buff=0.1).scale(0.5)
-        label2 = Text("a").next_to(arrow2, UP, buff=0.1).scale(0.5)
+        label2 = Text("b").next_to(arrow2, UP, buff=0.1).scale(0.5)
 
         # Adjust label positions if necessary
-        label1.next_to(arrow1, UP, buff=0.1)
-        label2.next_to(arrow2, UP, buff=0.1)
-        label3 = Text("b").next_to(arrow3, DOWN, buff=0.1).scale(0.5)
+        #label1.next_to(arrow1, UP, buff=0.1)
+        #label2.next_to(arrow2, UP, buff=0.1)
+        label3 = Text("a").next_to(arrow3, DOWN, buff=0.1).scale(0.5)
         label4 = Text("b").next_to(arrow4, DOWN, buff=0.1).scale(0.5)
 
 
         # Create a white circle around state3_img
-        circle_around_state3 = Circle(color=BLUE).scale(0.8)
+        circle_around_state3 = Circle(color=BLUE).scale(0.5)
         circle_around_state3.move_to(circle3.get_center())
 
         # Create a diagonal arrow pointing to state1_img
         start_point = circle1.get_center() + LEFT * 2 + UP * 1  # Adjust as needed
-        diagonal_arrow = Arrow(start=start_point, end=state1_img.get_left(), buff=0.1)
+        diagonal_arrow = Arrow(start=start_point, end=circle1.get_left(), buff=0.1)
 
         all_elements = Group(circle1, circle2, circle3, arrow1, arrow2, label1, label2, circle_around_state3, diagonal_arrow)
 
@@ -268,23 +268,54 @@ class FiniteStateMachine(Scene):
         self.wait(3)
         self.play(Create(circle_around_state3))
 
-        circle = Circle(color=BLUE).scale(0.6)
-        self.play(Create(circle))
 
-        radius = circle.width / 1.5
+        radius = circle1.width / 1.5
         angle = 52 * DEGREES  
 
         start_x = radius * np.cos(angle)/ 1.6
         start_y = radius * np.sin(angle) 
-        start_point = circle.get_center() + np.array([start_x, start_y, 5])
+        start_point = circle1.get_center() + np.array([start_x, start_y, 5])
 
         end_angle = angle + 45.5
         end_x = radius * np.cos(end_angle) / 1.6 
         end_y = radius * np.sin(end_angle)
-        end_point = circle.get_center() + np.array([end_x, end_y, 2])
+        end_point = circle1.get_center() + np.array([end_x, end_y, 2])
 
         arrow = CurvedArrow(start_point, end_point, color=WHITE, angle= 3)
-        self.play(Create(arrow))
+        label = Text("b", font_size=24, color=WHITE)
 
+        # Position the label - Adjust the position as needed
+        # You might need to experiment with these values to get the label in the right position
+        label_offset = np.array([0.2, 0.2, 0])  # Adjust this as needed
+        label.move_to(arrow.point_from_proportion(0.5) + label_offset)
+
+        # Add the arrow and label to the scene
+        self.play(Create(arrow))
+        self.play(Write(label))
+
+
+        radius = circle3.width / 1.5
+        angle = 52 * DEGREES  
+
+        start_x = radius * np.cos(angle)/ 1.6
+        start_y = radius * np.sin(angle) 
+        start_point = circle3.get_center() + np.array([start_x, start_y, 5])
+
+        end_angle = angle + 45.5
+        end_x = radius * np.cos(end_angle) / 1.6 
+        end_y = radius * np.sin(end_angle)
+        end_point = circle3.get_center() + np.array([end_x, end_y, 2])
+
+        arrow = CurvedArrow(start_point, end_point, color=WHITE, angle= 3)
+        label = Text("a", font_size=24, color=WHITE)
+
+        # Position the label - Adjust the position as needed
+        # You might need to experiment with these values to get the label in the right position
+        label_offset = np.array([0.2, 0.2, 0])  # Adjust this as needed
+        label.move_to(arrow.point_from_proportion(0.5) + label_offset)
+
+        # Add the arrow and label to the scene
+        self.play(Create(arrow))
+        self.play(Write(label))
         
 # manim -pql /Users/nikyakovlev/finite_state_machine/playground/nik_sandbox.py
