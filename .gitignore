@@ -2,6 +2,6 @@ extras
 media 
 playground/media
 playground/__pycache__
-media
+project/media
 project/__pycache__
 src/media
