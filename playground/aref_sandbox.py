@@ -37,6 +37,13 @@ class DEA(MovingCameraScene):
         self.play(Create(surrounding_rectangle))  
         self.wait(2)  
 
+    def sound(self):
+        self.play(Write(Text("Hello World!")), run_time=3)
+        
+        self.add_sound("../src/sounds/pokemon_original.mp3")
+
+        self.play(FadeOut(Text("Hello World!")), run_time=1)
+
 # To run this scene with Manim, use the following command in the terminal:
 # manim -pql aref_sandbox.py Main
 
