@@ -233,8 +233,6 @@ class FiniteStateMachine(Scene):
         label2 = Text("b").next_to(arrow2, UP, buff=0.1).scale(0.5)
 
         # Adjust label positions if necessary
-        #label1.next_to(arrow1, UP, buff=0.1)
-        #label2.next_to(arrow2, UP, buff=0.1)
         label3 = Text("a").next_to(arrow3, DOWN, buff=0.1).scale(0.5)
         label4 = Text("b").next_to(arrow4, DOWN, buff=0.1).scale(0.5)
 
