@@ -301,7 +301,7 @@ class Main(MovingCameraScene):
 
         self.dea_all_elements = Group(diagonal_arrow, circle1, text1, arrow_1, label_1, arrow1, label1, arrow3, label3, circle2, text2, arrow2, label2, circle3, text3, arrow_3, label_3, circle_around_state3)
 
-
+        ###################Scene Animations###################
         self.play(Create(diagonal_arrow))
         self.wait(3)
         self.play(FadeIn(circle1), Write(text1))
@@ -416,17 +416,32 @@ class Main(MovingCameraScene):
         label_1.move_to(arrow_1.point_from_proportion(0.5) + label_offset)
         label_3.move_to(arrow_3.point_from_proportion(0.5) + label_offset)
         
-        # red rectangle
-        surrounding_rectangle = SurroundingRectangle(label_1, buff=.1, color="red")
-        divider_line = Line(UP*2, DOWN*2)
-
-
+        # red rectangles
+        red_surrounding_rectangle = SurroundingRectangle(label_1, buff=.1, color="red")
+        red_surrounding_rectangle_a = SurroundingRectangle(label1, buff=.1, color="red")
 
         all_elements = Group(diagonal_arrow, circle1, text1, arrow_1, label_1, arrow1,
                             label1, arrow3, label3, circle2, text2, arrow2, label2,
-                            circle3, text3, arrow_3, label_3, circle_around_state3,surrounding_rectangle)
+                            circle3, text3, arrow_3, label_3, circle_around_state3,
+                            red_surrounding_rectangle, red_surrounding_rectangle_a)
+        
 
+        # NEA right side
+        nea_graph_animation = all_elements.animate.scale(0.6).to_edge(RIGHT, buff=0.5)
+        nea_title_animation = self.nea.animate.scale(0.7).to_edge(RIGHT, buff=2.8)
 
+        # DEA
+        dea_title_shortcut = Text("DEA", font_size=50).scale(0.7).to_edge(UP).to_edge(LEFT, buff=2.8)
+        dea_graph = self.dea_all_elements.scale(0.6).to_edge(LEFT, buff=0.5)
+
+        #versus
+        versus_text = Text("VS.",font_size=50).scale(0.7).to_edge(UP)
+
+        #divider line
+        divider_line = Line(UP*2, DOWN*2)
+
+        ###################Scene Animations###################
+        # the create of NEA graph
         self.play(Create(diagonal_arrow))
         self.wait(3)
         self.play(FadeIn(circle1), Write(text1))
@@ -447,25 +462,60 @@ class Main(MovingCameraScene):
         self.wait(3)
         self.play(Create(circle_around_state3))
         self.wait(5)
-        #red rectangle
-        self.play(Create(surrounding_rectangle))  
+        
+        #red rectangle (a,b)
+        self.play(Create(red_surrounding_rectangle))  
         self.wait(2)
 
-        # move nea - right
-        self.play(all_elements.animate.scale(0.6).to_edge(RIGHT, buff=0.5))
+        #red rectangle (a)
+        self.play(Create(red_surrounding_rectangle_a))  
+        self.wait(2)
 
-        # move title to graph
-        self.play(self.nea.animate.scale(0.7).to_edge(RIGHT, buff=2.8))
- 
+        # move NEA
+        nea_animations = AnimationGroup(nea_graph_animation,nea_title_animation)
+        self.play(nea_animations)
+        
+        # show DEA 
+        # DEA title
+        self.play(FadeIn(dea_title_shortcut, shift=DOWN))
+        self.wait(2)
+
+        # DEA graph 
+        self.play(FadeIn(dea_graph))
+        self.wait(3)  
+
+        # Fadeout DEA 
+        self.play(FadeOut(dea_graph,dea_title_shortcut))
+        self.wait(1)
+
+        # move NEA back
+        nea_title_animation = self.nea.animate.move_to(UP * 3.5)  
+        nea_graph_animation = all_elements.animate.next_to(self.nea, DOWN, buff=1.0)
+        red_surrounding_rectangle_animation = FadeOut(red_surrounding_rectangle)
+        red_surrounding_rectangle_a_animation = FadeOut(red_surrounding_rectangle_a)
+        nea_animations = AnimationGroup(nea_title_animation, nea_graph_animation,
+                                        red_surrounding_rectangle_animation, red_surrounding_rectangle_a_animation)
+
+        self.play(nea_animations)
+        self.wait(4)
+
+
+
+        # versus
+        ##self.play(FadeIn(versus_text))
+
+
         # DEA graph
-        self.dea_all_elements.scale(0.6).to_edge(LEFT, buff=0.5)
-        self.add(Text("DEA", font_size= 50).scale(0.7).to_edge(UP).to_edge(LEFT, buff=2.8))
-        self.wait(2)
-        self.add(self.dea_all_elements)
-        self.wait(2)  
+        #self.play(FadeIn(dea_graph))
+        #self.wait(2)  
 
         # a line as divider 
-        self.play(Create(divider_line))
+        #self.play(Create(divider_line))
 
-        self.clear()
+
         
+        # move nea - right
+        #self.play(all_elements.animate.scale(0.6).to_edge(RIGHT, buff=0.5))
+        # move title to graph
+        #self.play(self.nea.animate.scale(0.7).to_edge(RIGHT, buff=2.8))
+        #self.add(Text("DEA", font_size= 50).scale(0.7).to_edge(UP).to_edge(LEFT, buff=2.8))
