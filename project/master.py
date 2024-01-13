@@ -27,6 +27,7 @@ class Main(MovingCameraScene):
         self.show_description()
         self.nea_title_short_up()
         self.nea_graph()
+        #self.dea_vs_nea()
 
     def greeting(self):
         text = Text("Hallo Zusammen!", font_size= 50)
@@ -493,13 +494,15 @@ class Main(MovingCameraScene):
         nea_graph_animation = all_elements.animate.next_to(self.nea, DOWN, buff=1.0)
         red_surrounding_rectangle_animation = FadeOut(red_surrounding_rectangle)
         red_surrounding_rectangle_a_animation = FadeOut(red_surrounding_rectangle_a)
+
+        #Group all animation
         nea_animations = AnimationGroup(nea_title_animation, nea_graph_animation,
                                         red_surrounding_rectangle_animation, red_surrounding_rectangle_a_animation)
 
         self.play(nea_animations)
         self.wait(4)
 
-
+    #def dea_vs_nea(self):
 
         # versus
         ##self.play(FadeIn(versus_text))
