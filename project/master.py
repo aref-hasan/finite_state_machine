@@ -1,4 +1,3 @@
-
 from manim import *
 import cv2
 from manim_voiceover import VoiceoverScene
@@ -6,9 +5,9 @@ from manim.scene.moving_camera_scene import MovingCameraScene
 from manim_voiceover.services.gtts import GTTSService
 from manim_voiceover.services.recorder import RecorderService
 
-###########################################################################################################
-################################################MAIN#######################################################
-###########################################################################################################
+##############################################################################################################
+################################################MAIN##########################################################
+##############################################################################################################
 
 class Main(MovingCameraScene):
     def construct(self):
@@ -19,16 +18,22 @@ class Main(MovingCameraScene):
         #self.pokemon_fig()
         #self.pokemon_components()
         #self.pokemon_components_math()
+        # DEA
         self.dea_graph()
         self.dea_table()
         self.dea_components()
         self.dea_titles()
+        self.dea_example()
+        # NEA
         self.nea_intro()
         self.nea_graph()
         self.nea_table()
         self.nea_components()
         self.nea_titles()
+        self.nea_example()
+        # DEA & NEA
         #self.dea_vs_nea()
+        #self.aktzeptoren()
 
     def greeting(self):
         text = Text("Hallo Zusammen!", font_size= 50)
@@ -255,20 +260,20 @@ class Main(MovingCameraScene):
         self.dea_long = Text("Deterministische endliche Automaten", font_size= 50)  
 
         # The 3 begining circles
-        circle2 = Circle(radius=0.6, color=BLUE)
-        circle2.move_to(ORIGIN)
-        circle1 = Circle(radius=0.6, color=BLUE).next_to(circle2, LEFT, buff=2)
-        circle3 = Circle(radius=0.6, color=BLUE).next_to(circle2, RIGHT, buff=2)
+        self.circle2 = Circle(radius=0.6, color=BLUE)
+        self.circle2.move_to(ORIGIN)
+        self.circle1 = Circle(radius=0.6, color=BLUE).next_to(self.circle2, LEFT, buff=2)
+        self.circle3 = Circle(radius=0.6, color=BLUE).next_to(self.circle2, RIGHT, buff=2)
         
         # text inside the circles
-        self.text1c = Text("1", font_size=24).move_to(circle1.get_center())
-        self.text2c = Text("2", font_size=24).move_to(circle2.get_center())
-        self.text3c = Text("3", font_size=24).move_to(circle3.get_center())
+        self.text1c = Text("1", font_size=24).move_to(self.circle1.get_center())
+        self.text2c = Text("2", font_size=24).move_to(self.circle2.get_center())
+        self.text3c = Text("3", font_size=24).move_to(self.circle3.get_center())
 
         # straight arrows
-        arrow1 = Arrow(start=circle1.get_top() + DOWN * 0.4, end=circle2.get_top() + DOWN * 0.4, buff=0.7) 
-        arrow2 = Arrow(start=circle2.get_top() + DOWN * 0.4, end=circle3.get_top() + DOWN * 0.4, buff=0.7)
-        arrow3 = Arrow(start=circle2.get_bottom() + UP * 0.4, end=circle1.get_bottom() + UP * 0.4, buff=0.7)
+        arrow1 = Arrow(start=self.circle1.get_top() + DOWN * 0.4, end=self.circle2.get_top() + DOWN * 0.4, buff=0.7) 
+        arrow2 = Arrow(start=self.circle2.get_top() + DOWN * 0.4, end=self.circle3.get_top() + DOWN * 0.4, buff=0.7)
+        arrow3 = Arrow(start=self.circle2.get_bottom() + UP * 0.4, end=self.circle1.get_bottom() + UP * 0.4, buff=0.7)
 
         # straight arrow labels
         label1 = Text("a").next_to(arrow1, UP, buff=0.1).scale(0.5)
@@ -277,24 +282,24 @@ class Main(MovingCameraScene):
 
         # double circle for circle 3
         circle_around_state3 = Circle(color=BLUE).scale(0.5)
-        circle_around_state3.move_to(circle3.get_center())
+        circle_around_state3.move_to(self.circle3.get_center())
 
         # arrow for iniial state
-        start_point = circle1.get_center() + LEFT * 2 + UP * 1 
-        diagonal_arrow = Arrow(start=start_point, end=circle1.get_left(), buff=0.1)
+        start_point = self.circle1.get_center() + LEFT * 2 + UP * 1 
+        diagonal_arrow = Arrow(start=start_point, end=self.circle1.get_left(), buff=0.1)
 
         # coordinates for curved arrows
-        radius = circle1.width / 1.5
+        radius = self.circle1.width / 1.5
         angle = 52 * DEGREES  
         start_x = radius * np.cos(angle)/ 1.6
         start_y = radius * np.sin(angle) 
-        start_point_1 = circle1.get_center() + np.array([start_x, start_y, 5])
-        start_point_3 = circle3.get_center() + np.array([start_x, start_y, 5])
+        start_point_1 = self.circle1.get_center() + np.array([start_x, start_y, 5])
+        start_point_3 = self.circle3.get_center() + np.array([start_x, start_y, 5])
         end_angle = angle + 45.5
         end_x = radius * np.cos(end_angle) / 1.6 
         end_y = radius * np.sin(end_angle)
-        end_point_1 = circle1.get_center() + np.array([end_x, end_y, 2])
-        end_point_3 = circle3.get_center() + np.array([end_x, end_y, 2])
+        end_point_1 = self.circle1.get_center() + np.array([end_x, end_y, 2])
+        end_point_3 = self.circle3.get_center() + np.array([end_x, end_y, 2])
 
         # curved arrows
         arrow_1 = CurvedArrow(start_point_1, end_point_1, color=WHITE, angle= 3)
@@ -308,8 +313,8 @@ class Main(MovingCameraScene):
         label_3.move_to(arrow_3.point_from_proportion(0.5) + label_offset)
 
 
-        self.dea_all_elements = Group(diagonal_arrow, circle1, self.text1c, arrow_1, label_1, arrow1, label1,
-                                    arrow3, label3, circle2, self.text2c, arrow2, label2, circle3, self.text3c, arrow_3,
+        self.dea_all_elements = Group(diagonal_arrow, self.circle1, self.text1c, arrow_1, label_1, arrow1, label1,
+                                    arrow3, label3, self.circle2, self.text2c, arrow2, label2, self.circle3, self.text3c, arrow_3,
                                     label_3, circle_around_state3)
 
     
@@ -331,7 +336,7 @@ class Main(MovingCameraScene):
         # DEA Graph
         self.play(Create(diagonal_arrow))
         self.wait(3)
-        self.play(FadeIn(circle1), Write(self.text1c))
+        self.play(FadeIn(self.circle1), Write(self.text1c))
         self.wait(3)
         self.play(Create(arrow_1), Write(label_1)) 
         self.wait(3)
@@ -339,11 +344,11 @@ class Main(MovingCameraScene):
         self.wait(3)
         self.play(Create(arrow3), Write(label3))
         self.wait(3)
-        self.play(FadeIn(circle2), Write(self.text2c))  
+        self.play(FadeIn(self.circle2), Write(self.text2c))  
         self.wait(3)
         self.play(Create(arrow2), Write(label2))
         self.wait(3)
-        self.play(FadeIn(circle3), Write(self.text3c))
+        self.play(FadeIn(self.circle3), Write(self.text3c))
         self.wait(3)
         self.play(Create(arrow_3), Write(label_3))  
         self.wait(3)
@@ -455,10 +460,162 @@ class Main(MovingCameraScene):
         titles = Group(text_1,text_2, text_3)
         
         self.play(FadeIn(titles))
+        
+        self.play(FadeOut(titles, self.surrounding_rectangle_components, self.t1, self.components))
+        
+        self.wait(4)
+        
+    def dea_example(self):
+        self.play(self.dea_all_elements.animate.move_to(ORIGIN + LEFT * 0.6))
+        self.play(self.dea_all_elements.animate.scale(1/0.6))
+
+        # add test sequence
+        text_sequence = Text("Sequenz: a a b a b a", font_size=35).next_to(self.circle2, DOWN, buff=1)
+
+        self.add(text_sequence)
+        self.wait(4)
+
+        question_mark = Text("?", font_size=50).next_to(text_sequence, RIGHT)
+        self.play(Write(question_mark))
+        for _ in range(2): 
+            self.play(question_mark.animate.scale(1.2), run_time=0.5)
+            self.play(question_mark.animate.scale(0.8), run_time=0.5)
+            self.play(question_mark.animate.scale(1.2), run_time=0.5)
+            self.play(question_mark.animate.scale(0.001), run_time=0.9)
+
+        # go through the sequence in the Übergangstabelle
+        rect_around_a1 = SurroundingRectangle(text_sequence[8], color=RED)
+        rect_around_a2 = SurroundingRectangle(text_sequence[9], color=RED)
+        rect_around_a3 = SurroundingRectangle(text_sequence[11], color=RED)
+        rect_around_a4 = SurroundingRectangle(text_sequence[13], color=RED)
+        rect_around_b1 = SurroundingRectangle(text_sequence[10], color=RED)
+        rect_around_b2 = SurroundingRectangle(text_sequence[12], color=RED)
+        rect_around_1 = SurroundingRectangle(self.text1c, color=RED)       
+        rect_around_2 = SurroundingRectangle(self.text2c, color=RED)
+        rect_around_3 = SurroundingRectangle(self.text3c, color=RED)
+
+
+        arrow1_red = Arrow(start=self.circle1.get_top() + DOWN * 0.4, end=self.circle2.get_top() + DOWN * 0.4, buff=0.7, color=RED) 
+        arrow2_red = Arrow(start=self.circle2.get_top() + DOWN * 0.4, end=self.circle3.get_top() + DOWN * 0.4, buff=0.7, color=RED)
+        arrow3_red = Arrow(start=self.circle2.get_bottom() + UP * 0.4, end=self.circle1.get_bottom() + UP * 0.4, buff=0.7, color=RED)
+
+        # coordinates for curved arrows
+        radius = self.circle1.width / 1.5
+        angle = 52 * DEGREES  
+        start_x = radius * np.cos(angle)/ 1.6
+        start_y = radius * np.sin(angle) 
+        start_point_1 = self.circle1.get_center() + np.array([start_x, start_y, 5])
+        start_point_3 = self.circle3.get_center() + np.array([start_x, start_y, 5])
+        end_angle = angle + 45.5
+        end_x = radius * np.cos(end_angle) / 1.6 
+        end_y = radius * np.sin(end_angle)
+        end_point_1 = self.circle1.get_center() + np.array([end_x, end_y, 2])
+        end_point_3 = self.circle3.get_center() + np.array([end_x, end_y, 2])
+
+        arrow4_red = CurvedArrow(start_point_1, end_point_1, color=RED, angle= 3)
+        arrow5_red = CurvedArrow(start_point_3, end_point_3, color=RED, angle= 3)
+
+        # 1. a in sequence
+        self.add(rect_around_a1)
+        self.wait(2)
+        self.add(rect_around_1)
+        self.wait(2)
+        self.remove(rect_around_1)
+        self.add(arrow1_red)
+        self.wait(2)
+        self.remove(arrow1_red)
+        self.add(rect_around_2)
+        self.wait(2)
+        self.remove(rect_around_2)
+        self.wait(1)
+        self.remove(rect_around_a1)
+
+        # 2. a in sequence
+        self.add(rect_around_a2)
+        self.wait(2)
+        self.add(rect_around_2)
+        self.wait(2)
+        self.remove(rect_around_2)
+        self.add(arrow3_red)
+        self.wait(2)
+        self.remove(arrow3_red)
+        self.add(rect_around_1)
+        self.wait(2)
+        self.remove(rect_around_1)
+        self.wait(1)
+        self.remove(rect_around_a2)
+
+        # 1. b in sequence
+        self.add(rect_around_b1)
+        self.wait(2)
+        self.add(rect_around_1)
+        self.wait(2)
+        self.remove(rect_around_1)
+        self.add(arrow4_red)
+        self.wait(2)
+        self.remove(arrow4_red)
+        self.add(rect_around_1)
+        self.wait(2)
+        self.remove(rect_around_1)
+        self.wait(1)
+        self.remove(rect_around_b1)
+
+        # 3. a in sequence
+        self.add(rect_around_a3)
+        self.wait(2)
+        self.add(rect_around_1)
+        self.wait(2)
+        self.remove(rect_around_1)
+        self.add(arrow1_red)
+        self.wait(2)
+        self.remove(arrow1_red)
+        self.add(rect_around_2)
+        self.wait(2)
+        self.remove(rect_around_2)
+        self.wait(1)
+        self.remove(rect_around_a3)
+
+        # 2. b in sequence
+        self.add(rect_around_b2)
+        self.wait(2)
+        self.add(rect_around_2)
+        self.wait(2)
+        self.remove(rect_around_2)
+        self.add(arrow2_red)
+        self.wait(2)
+        self.remove(arrow2_red)
+        self.add(rect_around_3)
+        self.wait(2)
+        self.remove(rect_around_3)
+        self.wait(1)
+        self.remove(rect_around_b2)
+
+        # 4. a in sequence
+        self.add(rect_around_a4)
+        self.wait(2)
+        self.add(rect_around_3)
+        self.wait(2)
+        self.remove(rect_around_3)
+        self.add(arrow5_red)
+        self.wait(2)
+        self.remove(arrow5_red)
+        self.add(rect_around_3)
+        self.wait(2)
+        self.remove(rect_around_3)
+        self.wait(1)
+        self.remove(rect_around_a4)
+
+        # add chekmark at the end of the sequence
+        checkmark = Text("✓", font_size=50, color=GREEN).next_to(text_sequence, RIGHT)
+        self.add(checkmark)
+        self.wait(2)
 
         self.clear()
 
+#########################################################
 ###########################NEA###########################
+#########################################################
+        
     def nea_intro(self):
         # NEA title shortcut
         nea_long = Text("Nichtdeterministische endliche Automaten", font_size= 50)
@@ -504,23 +661,23 @@ class Main(MovingCameraScene):
         # move NEA shortcut up
         self.play(self.nea.animate.to_edge(UP))  
         self.wait(2)
-        
+
     def nea_graph(self):
         # The 3 begining circles
-        circle2 = Circle(radius=0.6, color=BLUE)
-        circle2.move_to(ORIGIN)
-        circle1 = Circle(radius=0.6, color=BLUE).next_to(circle2, LEFT, buff=2)
-        circle3 = Circle(radius=0.6, color=BLUE).next_to(circle2, RIGHT, buff=2)
+        self.nea_circle2 = Circle(radius=0.6, color=BLUE)
+        self.nea_circle2.move_to(ORIGIN)
+        self.nea_circle1 = Circle(radius=0.6, color=BLUE).next_to(self.nea_circle2, LEFT, buff=2)
+        self.nea_circle3 = Circle(radius=0.6, color=BLUE).next_to(self.nea_circle2, RIGHT, buff=2)
         
         # text inside the circles
-        self.text1 = Text("1", font_size=24).move_to(circle1.get_center())
-        text2 = Text("2", font_size=24).move_to(circle2.get_center())
-        text3 = Text("3", font_size=24).move_to(circle3.get_center())
+        self.nea_text1 = Text("1", font_size=24).move_to(self.nea_circle1.get_center())
+        self.nea_text2 = Text("2", font_size=24).move_to(self.nea_circle2.get_center())
+        self.nea_text3 = Text("3", font_size=24).move_to(self.nea_circle3.get_center())
 
         # straight arrows
-        arrow1 = Arrow(start=circle1.get_top() + DOWN * 0.4, end=circle2.get_top() + DOWN * 0.4, buff=0.7) 
-        arrow2 = Arrow(start=circle2.get_top() + DOWN * 0.4, end=circle3.get_top() + DOWN * 0.4, buff=0.7)
-        arrow3 = Arrow(start=circle2.get_bottom() + UP * 0.4, end=circle1.get_bottom() + UP * 0.4, buff=0.7)
+        arrow1 = Arrow(start=self.nea_circle1.get_top() + DOWN * 0.4, end=self.nea_circle2.get_top() + DOWN * 0.4, buff=0.7) 
+        arrow2 = Arrow(start=self.nea_circle2.get_top() + DOWN * 0.4, end=self.nea_circle3.get_top() + DOWN * 0.4, buff=0.7)
+        arrow3 = Arrow(start=self.nea_circle2.get_bottom() + UP * 0.4, end=self.nea_circle1.get_bottom() + UP * 0.4, buff=0.7)
 
         # straight arrow labels
         label1 = Text("a").next_to(arrow1, UP, buff=0.1).scale(0.5)
@@ -529,24 +686,24 @@ class Main(MovingCameraScene):
 
         # double circle for circle 3
         circle_around_state3 = Circle(color=BLUE).scale(0.5)
-        circle_around_state3.move_to(circle3.get_center())
+        circle_around_state3.move_to(self.nea_circle3.get_center())
 
         # arrow for iniial state
-        start_point = circle1.get_center() + LEFT * 2 + UP * 1 
-        diagonal_arrow = Arrow(start=start_point, end=circle1.get_left(), buff=0.1)
+        start_point = self.nea_circle1.get_center() + LEFT * 2 + UP * 1 
+        diagonal_arrow = Arrow(start=start_point, end=self.nea_circle1.get_left(), buff=0.1)
 
         # coordinates for curved arrows
-        radius = circle1.width / 1.5
+        radius = self.nea_circle1.width / 1.5
         angle = 52 * DEGREES  
         start_x = radius * np.cos(angle)/ 1.6
         start_y = radius * np.sin(angle) 
-        start_point_1 = circle1.get_center() + np.array([start_x, start_y, 5])
-        start_point_3 = circle3.get_center() + np.array([start_x, start_y, 5])
+        start_point_1 = self.nea_circle1.get_center() + np.array([start_x, start_y, 5])
+        start_point_3 = self.nea_circle3.get_center() + np.array([start_x, start_y, 5])
         end_angle = angle + 45.5
         end_x = radius * np.cos(end_angle) / 1.6 
         end_y = radius * np.sin(end_angle)
-        end_point_1 = circle1.get_center() + np.array([end_x, end_y, 2])
-        end_point_3 = circle3.get_center() + np.array([end_x, end_y, 2])
+        end_point_1 = self.nea_circle1.get_center() + np.array([end_x, end_y, 2])
+        end_point_3 = self.nea_circle3.get_center() + np.array([end_x, end_y, 2])
 
         # curved arrows
         arrow_1 = CurvedArrow(start_point_1, end_point_1, color=WHITE, angle= 3)
@@ -560,22 +717,28 @@ class Main(MovingCameraScene):
         label_3.move_to(arrow_3.point_from_proportion(0.5) + label_offset)
         
         # red rectangles
-        red_surrounding_rectangle = SurroundingRectangle(self.label_1, buff=.1, color="red")
-        red_surrounding_rectangle_a = SurroundingRectangle(label1, buff=.1, color="red")
+        self.red_surrounding_rectangle = SurroundingRectangle(self.label_1, buff=.1, color="red")
+        self.red_surrounding_rectangle_a = SurroundingRectangle(label1, buff=.1, color="red")
 
-        all_elements = Group(diagonal_arrow, circle1, self.text1, arrow_1, self.label_1, arrow1,
-                            label1, arrow3, label3, circle2, text2, arrow2, label2,
-                            circle3, text3, arrow_3, label_3, circle_around_state3,
-                            red_surrounding_rectangle, red_surrounding_rectangle_a)
+        # all nea graph elements (without the red rectangles)
+        self.nea_graph_elements = Group(diagonal_arrow, self.nea_circle1, self.nea_text1, arrow_1, self.label_1, arrow1,
+                            label1, arrow3, label3, self.nea_circle2, self.nea_text2, arrow2, label2,
+                            self.nea_circle3, self.nea_text3, arrow_3, label_3, circle_around_state3,
+                            self.red_surrounding_rectangle, self.red_surrounding_rectangle_a)
         
-
+        # all nea graph elements (with the red rectangles)
+        self.nea_all_elements = Group(diagonal_arrow, self.nea_circle1, self.nea_text1, arrow_1, self.label_1, arrow1,
+                            label1, arrow3, label3, self.nea_circle2, self.nea_text2, arrow2, label2,
+                            self.nea_circle3, self.nea_text3, arrow_3, label_3, circle_around_state3,
+                            self.red_surrounding_rectangle, self.red_surrounding_rectangle_a)
+        
         # NEA right side
-        nea_graph_animation = all_elements.animate.scale(0.6).to_edge(RIGHT, buff=0.5)
+        nea_graph_animation = self.nea_all_elements.animate.scale(0.6).to_edge(RIGHT, buff=0.5)
         nea_title_animation = self.nea.animate.scale(0.7).to_edge(RIGHT, buff=2.8)
 
         # DEA
         dea_title_shortcut = Text("DEA", font_size=50).scale(0.7).to_edge(UP).to_edge(LEFT, buff=2.8)
-        dea_graph = self.dea_all_elements.scale(1.1).to_edge(LEFT, buff=0.5)
+        dea_graph = self.dea_all_elements.to_edge(LEFT, buff=0.5)
 
         #versus
         versus_text = Text("VS.",font_size=50).scale(0.7).to_edge(UP)
@@ -587,7 +750,7 @@ class Main(MovingCameraScene):
         # the create of NEA graph
         self.play(Create(diagonal_arrow))
         self.wait(3)
-        self.play(FadeIn(circle1), Write(self.text1))
+        self.play(FadeIn(self.nea_circle1), Write(self.nea_text1))
         self.wait(3)
         self.play(Create(arrow_1), Write(self.label_1)) 
         self.wait(3)
@@ -595,11 +758,11 @@ class Main(MovingCameraScene):
         self.wait(3)
         self.play(Create(arrow3), Write(label3))
         self.wait(3)
-        self.play(FadeIn(circle2), Write(text2))  
+        self.play(FadeIn(self.nea_circle2), Write(self.nea_text2))  
         self.wait(3)
         self.play(Create(arrow2), Write(label2))
         self.wait(3)
-        self.play(FadeIn(circle3), Write(text3))
+        self.play(FadeIn(self.nea_circle3), Write(self.nea_text3))
         self.wait(3)
         self.play(Create(arrow_3), Write(label_3))  
         self.wait(3)
@@ -607,11 +770,11 @@ class Main(MovingCameraScene):
         self.wait(5)
         
         #red rectangle (a,b)
-        self.play(Create(red_surrounding_rectangle))  
+        self.play(Create(self.red_surrounding_rectangle))  
         self.wait(2)
 
         #red rectangle (a)
-        self.play(Create(red_surrounding_rectangle_a))  
+        self.play(Create(self.red_surrounding_rectangle_a))  
         self.wait(2)
 
         # move NEA
@@ -636,12 +799,12 @@ class Main(MovingCameraScene):
         self.play(nea_title_animation)
 
         # move NEA graph back
-        nea_graph_animation = all_elements.animate.next_to(self.nea, UP, buff= - 2.4)
-        red_surrounding_rectangle_animation = FadeOut(red_surrounding_rectangle)
-        red_surrounding_rectangle_a_animation = FadeOut(red_surrounding_rectangle_a)
+        nea_graph_animation = self.nea_all_elements.animate.next_to(self.nea, UP, buff= - 2.4)
+        self.red_surrounding_rectangle_animation = FadeOut(self.red_surrounding_rectangle)
+        self.red_surrounding_rectangle_a_animation = FadeOut(self.red_surrounding_rectangle_a)
 
         #Group all animation
-        nea_animations = AnimationGroup(red_surrounding_rectangle_animation, red_surrounding_rectangle_a_animation, 
+        nea_animations = AnimationGroup(self.red_surrounding_rectangle_animation, self.red_surrounding_rectangle_a_animation, 
                                         nea_graph_animation)
 
         self.play(nea_animations)
@@ -681,22 +844,23 @@ class Main(MovingCameraScene):
         arrow1 = Arrow(text1.get_right(), self.nea_t1.get_cell((2, 1)).get_left(), buff=0.1)
 
         # Adding text with an arrow
-        text2 = Text("Übergang", font_size=36, color=WHITE)
-        text2.next_to(self.nea_t1.get_cell((1, 3)), RIGHT, buff=1)
-        arrow2 = Arrow(text2.get_left(), self.nea_t1.get_cell((1, 3)).get_right(), buff=0.1)
+        self.nea_text2 = Text("Übergang", font_size=36, color=WHITE)
+        self.nea_text2.next_to(self.nea_t1.get_cell((1, 3)), RIGHT, buff=1)
+        arrow2 = Arrow(self.nea_text2.get_left(), self.nea_t1.get_cell((1, 3)).get_right(), buff=0.1)
 
         # Adding text with an arrow
-        text3 = Text("resultierender Zustand", font_size=36, color=WHITE)
-        text3.next_to(self.nea_t1.get_cell((2, 3)), RIGHT, buff=1)
-        arrow3 = Arrow(text3.get_left(), self.nea_t1.get_cell((2, 3)).get_right(), buff=0.1)
+        self.nea_text3 = Text("resultierender Zustand", font_size=36, color=WHITE)
+        self.nea_text3.next_to(self.nea_t1.get_cell((2, 3)), RIGHT, buff=1)
+        arrow3 = Arrow(self.nea_text3.get_left(), self.nea_t1.get_cell((2, 3)).get_right(), buff=0.1)
 
 
         red_rectangle1 = Rectangle(color=RED).scale(0.3)
-        red_rectangle1.surround(self.text1)
+        red_rectangle1.surround(self.nea_text1)
 
         red_rectangle2 = Rectangle(color=RED).scale(0.3)
         red_rectangle2.surround(self.label_1)
 
+        ###################Scene Animations###################
 
         # table
         self.play(Create(self.nea_t1))
@@ -706,18 +870,18 @@ class Main(MovingCameraScene):
         self.add(red_rectangle1)
         self.wait(2)
         self.remove(red_rectangle1)
-        self.add(text2, arrow2)
+        self.add(self.nea_text2, arrow2)
         self.wait(2)
         self.add(red_rectangle2)
         self.wait(2)
         self.remove(red_rectangle2)
-        self.add(text3, arrow3)
+        self.add(self.nea_text3, arrow3)
         self.wait(2)
         self.add(red_rectangle1)         
         self.wait(4)
         
 
-        self.play(FadeOut(text1, arrow1, text2, arrow2, text3, arrow3, red_rectangle1))
+        self.play(FadeOut(text1, arrow1, self.nea_text2, arrow2, self.nea_text3, arrow3, red_rectangle1))
         self.wait(2)
 
         self.play(self.nea_t1.animate.to_edge(LEFT))
@@ -734,6 +898,12 @@ class Main(MovingCameraScene):
         ).arrange(DOWN, aligned_edge=LEFT, buff=0.5)
         self.components_text.scale(0.7)
         self.components_text.next_to(self.t1.get_cell((2, 3)), RIGHT, buff=3.5)
+
+        
+
+
+        ###################Scene Animations###################
+        # components
         self.play(LaggedStart(*[Write(comp) for comp in self.components_text], lag_ratio=0.9))  # Sequentially write the components with delay.
         self.wait(2)  
         self.play(self.components_text.animate.scale(0.85).to_edge(RIGHT + DOWN, buff=1))
@@ -749,10 +919,175 @@ class Main(MovingCameraScene):
         text_3 = Text("Übergangsdiagramm",font_size=36, color=WHITE).next_to(text_1, UP, buff = 1)
 
         titles = Group(text_1,text_2, text_3)
-        
+
+        ###################Scene Animations###################
+
         self.play(FadeIn(titles))
+        self.wait(4)
+        self.play(FadeOut(titles, self.surrounding_rectangle_components_nea, self.nea_t1, self.components_text))
+        self.wait(4)
+    
+    def nea_example(self):
+        # move nea graph down
+        self.play(self.nea_graph_elements.animate.move_to(ORIGIN + LEFT * 0.6))
+        self.play(self.nea_graph_elements.animate.scale(1/0.6))
+        self.wait(4)
+
+        # add test sequence
+        text_sequence = Text("Sequenz: a a b a b a", font_size=35).next_to(self.nea_circle2, DOWN, buff=1)
+        
+        #question mark
+        question_mark = Text("?", font_size=50).next_to(text_sequence, RIGHT)
+
+        
+        ###################Scene Animations###################
+        
+        # add the example
+        self.add(text_sequence)
+        self.wait(4)
+
+        self.play(Write(question_mark))
+        for _ in range(2): 
+            self.play(question_mark.animate.scale(1.2), run_time=0.5)
+            self.play(question_mark.animate.scale(0.8), run_time=0.5)
+            self.play(question_mark.animate.scale(1.2), run_time=0.5)
+            self.play(question_mark.animate.scale(0.001), run_time=0.9)
+
+        # go through the sequence in the Übergangstabelle
+        rect_around_a1 = SurroundingRectangle(text_sequence[8], color=RED)
+        rect_around_a2 = SurroundingRectangle(text_sequence[9], color=RED)
+        rect_around_a3 = SurroundingRectangle(text_sequence[11], color=RED)
+        rect_around_a4 = SurroundingRectangle(text_sequence[13], color=RED)
+        rect_around_b1 = SurroundingRectangle(text_sequence[10], color=RED)
+        rect_around_b2 = SurroundingRectangle(text_sequence[12], color=RED)
+        rect_around_1 = SurroundingRectangle(self.nea_text1, color=RED)       
+        rect_around_2 = SurroundingRectangle(self.nea_text2, color=RED)
+        rect_around_3 = SurroundingRectangle(self.nea_text3, color=RED)
+
+        #arrows
+        arrow1_red = Arrow(start=self.nea_circle1.get_top() + DOWN * 0.4, end=self.nea_circle2.get_top() + DOWN * 0.4, buff=0.7, color=RED) 
+        arrow2_red = Arrow(start=self.nea_circle2.get_top() + DOWN * 0.4, end=self.nea_circle3.get_top() + DOWN * 0.4, buff=0.7, color=RED)
+        arrow3_red = Arrow(start=self.nea_circle2.get_bottom() + UP * 0.4, end=self.nea_circle1.get_bottom() + UP * 0.4, buff=0.7, color=RED)
+       
+       
+       # coordinates for curved arrows
+        radius = self.nea_circle1.width / 1.5
+        angle = 52 * DEGREES  
+        start_x = radius * np.cos(angle)/ 1.6
+        start_y = radius * np.sin(angle) 
+        start_point_1 = self.nea_circle1.get_center() + np.array([start_x, start_y, 5])
+        start_point_3 = self.nea_circle3.get_center() + np.array([start_x, start_y, 5])
+        end_angle = angle + 45.5
+        end_x = radius * np.cos(end_angle) / 1.6 
+        end_y = radius * np.sin(end_angle)
+        end_point_1 = self.nea_circle1.get_center() + np.array([end_x, end_y, 2])
+        end_point_3 = self.nea_circle3.get_center() + np.array([end_x, end_y, 2])
+
+        arrow4_red = CurvedArrow(start_point_1, end_point_1, color=RED, angle= 3)
+        arrow5_red = CurvedArrow(start_point_3, end_point_3, color=RED, angle= 3)
+
+        
+        # 1. a in sequence
+        self.add(rect_around_a1)
+        self.wait(2)
+        self.add(rect_around_1)
+        self.wait(2)
+        self.remove(rect_around_1)
+        self.add(arrow1_red)
+        self.wait(2)
+        self.remove(arrow1_red)
+        self.add(rect_around_2)
+        self.wait(2)
+        self.remove(rect_around_2)
+        self.wait(1)
+        self.remove(rect_around_a1)
+
+        # 2. a in sequence
+        self.add(rect_around_a2)
+        self.wait(2)
+        self.add(rect_around_2)
+        self.wait(2)
+        self.remove(rect_around_2)
+        self.add(arrow3_red)
+        self.wait(2)
+        self.remove(arrow3_red)
+        self.add(rect_around_1)
+        self.wait(2)
+        self.remove(rect_around_1)
+        self.wait(1)
+        self.remove(rect_around_a2)
+
+        # 1. b in sequence
+        self.add(rect_around_b1)
+        self.wait(2)
+        self.add(rect_around_1)
+        self.wait(2)
+        self.remove(rect_around_1)
+        self.add(arrow4_red)
+        self.wait(2)
+        self.remove(arrow4_red)
+        self.add(rect_around_1)
+        self.wait(2)
+        self.remove(rect_around_1)
+        self.wait(1)
+        self.remove(rect_around_b1)
+
+        # 3. a in sequence
+        self.add(rect_around_a3)
+        self.wait(2)
+        self.add(rect_around_1)
+        self.wait(2)
+        self.remove(rect_around_1)
+        self.add(arrow1_red)
+        self.wait(2)
+        self.remove(arrow1_red)
+        self.add(rect_around_2)
+        self.wait(2)
+        self.remove(rect_around_2)
+        self.wait(1)
+        self.remove(rect_around_a3)
+
+        # 2. b in sequence
+        self.add(rect_around_b2)
+        self.wait(2)
+        self.add(rect_around_2)
+        self.wait(2)
+        self.remove(rect_around_2)
+        self.add(arrow2_red)
+        self.wait(2)
+        self.remove(arrow2_red)
+        self.add(rect_around_3)
+        self.wait(2)
+        self.remove(rect_around_3)
+        self.wait(1)
+        self.remove(rect_around_b2)
+
+        # 4. a in sequence
+        self.add(rect_around_a4)
+        self.wait(2)
+        self.add(rect_around_3)
+        self.wait(2)
+        self.remove(rect_around_3)
+        self.add(arrow5_red)
+        self.wait(2)
+        self.remove(arrow5_red)
+        self.add(rect_around_3)
+        self.wait(2)
+        self.remove(rect_around_3)
+        self.wait(1)
+        self.remove(rect_around_a4)
+
+        # add chekmark at the end of the sequence
+        checkmark = Text("✓", font_size=50, color=GREEN).next_to(text_sequence, RIGHT)
+        self.add(checkmark)
+        self.wait(2)
 
         self.clear()
+
+#########################################################
+#########################DEA&NEA#########################
+#########################################################
+        
     #def dea_vs_nea(self):
 
         # versus
@@ -769,7 +1104,7 @@ class Main(MovingCameraScene):
 
         
         # move nea - right
-        #self.play(all_elements.animate.scale(0.6).to_edge(RIGHT, buff=0.5))
+        #self.play(self.nea_all_elements.animate.scale(0.6).to_edge(RIGHT, buff=0.5))
         # move title to graph
         #self.play(self.nea.animate.scale(0.7).to_edge(RIGHT, buff=2.8))
         #self.add(Text("DEA", font_size= 50).scale(0.7).to_edge(UP).to_edge(LEFT, buff=2.8))
