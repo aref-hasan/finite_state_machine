@@ -6,10 +6,10 @@ class objects(Scene):
     def construct(self):
         #self.greeting()
         #self.table_open()
-        #self.table()
+        self.table()
         #self.rahmen()
         #self.topics_listing()
-        self.circle_state()
+        #self.circle_state()
         #self.circle_x()
         #self.circle_final_state()
         #self.circle_self()
