@@ -36,219 +36,219 @@ class Main(MovingCameraScene):
         #self.dea_vs_nea()
         #self.aktzeptoren()
 
-    # def greeting(self):
-    #     text = Text("Hallo Zusammen!", font_size= 50)
-    #     self.play(Write(text))
-    #     self.wait(3)  
-    #     self.clear()
+    def greeting(self):
+        text = Text("Hallo Zusammen!", font_size= 50)
+        self.play(Write(text))
+        self.wait(3)  
+        self.clear()
 
-    # def welcome(self):
-    #     welcome_text = Text("Herzlich willkommen zu unserem\nVideo über Zustandsautomaten!", 
-    #                         font_size=48, 
-    #                         color=WHITE)
+    def welcome(self):
+        welcome_text = Text("Herzlich willkommen zu unserem\nVideo über Zustandsautomaten!", 
+                            font_size=48, 
+                            color=WHITE)
 
-    #     welcome_text.move_to(ORIGIN)
-    #     self.wait(3)
-    #     self.play(FadeOut(welcome_text))
+        welcome_text.move_to(ORIGIN)
+        self.wait(3)
+        self.play(FadeOut(welcome_text))
 
-    # def pokemon_logo(self):
-    #     self.image_logo = ImageMobject("../src/img/pokemon/pokemon_logo.png").scale(0.7)
-    #     self.image_logo.move_to(ORIGIN)
+    def pokemon_logo(self):
+        self.image_logo = ImageMobject("../src/img/pokemon/pokemon_logo.png").scale(0.7)
+        self.image_logo.move_to(ORIGIN)
 
-    #     self.play(FadeIn(self.image_logo))
-    #     self.wait(4)
+        self.play(FadeIn(self.image_logo))
+        self.wait(4)
         
-    #     #self.play(ShrinkToCenter(self.image_logo))
+        #self.play(ShrinkToCenter(self.image_logo))
 
-    # def vid(self):
-    #     self.play(ShrinkToCenter(self.image_logo))
-    #     cap = cv2.VideoCapture("../src/vid/pokeball_transition.mp4") #source: https://vfx.productioncrate.com/search/Pokeball+Transition+2&type=vfx
-    #     flag = True
-    #     while flag:
-    #         flag, frame = cap.read()
-    #         if flag:
-    #             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    #             frame_img = ImageMobject(frame)
-    #             self.add(frame_img)
-    #             self.wait(0.04)  # Anpassen für FPS
-    #             self.remove(frame_img)
-    #     cap.release()
+    def vid(self):
+        self.play(ShrinkToCenter(self.image_logo))
+        cap = cv2.VideoCapture("../src/vid/pokeball_transition.mp4") #source: https://vfx.productioncrate.com/search/Pokeball+Transition+2&type=vfx
+        flag = True
+        while flag:
+            flag, frame = cap.read()
+            if flag:
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                frame_img = ImageMobject(frame)
+                self.add(frame_img)
+                self.wait(0.04)  # Anpassen für FPS
+                self.remove(frame_img)
+        cap.release()
 
-    # def pokemon_fig(self):
-    #     state2_img = ImageMobject("../src/img/pokemon/PNG/charmeleon.png").scale(1)
-    #     state1_img = ImageMobject("../src/img/pokemon/PNG/charmander.png").scale(1).next_to(state2_img, LEFT, buff=2)
-    #     state3_img = ImageMobject("../src/img/pokemon/PNG/charizard.png").scale(1).next_to(state2_img, RIGHT, buff=2)
-    #     # transitions
-    #     arrow1 = Arrow(start=state1_img.get_right(), end=state2_img.get_left(), buff=0.3)
-    #     arrow2 = Arrow(start=state2_img.get_right(), end=state3_img.get_left(), buff=0.3)
-    #     label1 = Text("Lvl 16").next_to(arrow1, UP, buff=0.1).scale(0.5)
-    #     label2 = Text("Lvl 36").next_to(arrow2, UP, buff=0.1).scale(0.5)
+    def pokemon_fig(self):
+        state2_img = ImageMobject("../src/img/pokemon/PNG/charmeleon.png").scale(1)
+        state1_img = ImageMobject("../src/img/pokemon/PNG/charmander.png").scale(1).next_to(state2_img, LEFT, buff=2)
+        state3_img = ImageMobject("../src/img/pokemon/PNG/charizard.png").scale(1).next_to(state2_img, RIGHT, buff=2)
+        # transitions
+        arrow1 = Arrow(start=state1_img.get_right(), end=state2_img.get_left(), buff=0.3)
+        arrow2 = Arrow(start=state2_img.get_right(), end=state3_img.get_left(), buff=0.3)
+        label1 = Text("Lvl 16").next_to(arrow1, UP, buff=0.1).scale(0.5)
+        label2 = Text("Lvl 36").next_to(arrow2, UP, buff=0.1).scale(0.5)
 
-    #     #  a white circle around state3_img
-    #     circle_around_state3 = Circle(color=WHITE).scale(1.2)
-    #     circle_around_state3.move_to(state3_img.get_center())
+        #  a white circle around state3_img
+        circle_around_state3 = Circle(color=WHITE).scale(1.2)
+        circle_around_state3.move_to(state3_img.get_center())
 
-    #     # a diagonal arrow pointing to state1_img
-    #     start_point = state1_img.get_center() + LEFT * 2 + UP * 1  # Adjust as needed
-    #     diagonal_arrow = Arrow(start=start_point, end=state1_img.get_left(), buff=0.1)
+        # a diagonal arrow pointing to state1_img
+        start_point = state1_img.get_center() + LEFT * 2 + UP * 1  # Adjust as needed
+        diagonal_arrow = Arrow(start=start_point, end=state1_img.get_left(), buff=0.1)
 
-    #     all_elements = Group(state1_img, state2_img, state3_img, arrow1, arrow2, label1, label2, circle_around_state3, diagonal_arrow)
+        all_elements = Group(state1_img, state2_img, state3_img, arrow1, arrow2, label1, label2, circle_around_state3, diagonal_arrow)
 
 
-    #     self.play(Create(diagonal_arrow))
-    #     self.wait(3)
-    #     self.play(FadeIn(state1_img))
-    #     self.wait(3)
-    #     self.play(Create(arrow1), Write(label1))
-    #     self.wait(3)
-    #     self.play(FadeIn(state2_img))
-    #     self.wait(3)
-    #     self.play(Create(arrow2), Write(label2))
-    #     self.wait(3)
-    #     self.play(FadeIn(state3_img))
-    #     self.wait(3)
-    #     self.play(Create(circle_around_state3))
+        self.play(Create(diagonal_arrow))
+        self.wait(3)
+        self.play(FadeIn(state1_img))
+        self.wait(3)
+        self.play(Create(arrow1), Write(label1))
+        self.wait(3)
+        self.play(FadeIn(state2_img))
+        self.wait(3)
+        self.play(Create(arrow2), Write(label2))
+        self.wait(3)
+        self.play(FadeIn(state3_img))
+        self.wait(3)
+        self.play(Create(circle_around_state3))
 
-    #      # Transform the entire group
-    #     self.play(all_elements.animate.scale(0.6).to_edge(UP))
+         # Transform the entire group
+        self.play(all_elements.animate.scale(0.6).to_edge(UP))
 
-    # def pokemon_components(self):
-    #     self.components = VGroup(
-    #         MathTex(r"Ein \text{ endlicher Automat ist ein 5-Tupel } (Q, \Sigma, \delta, q_0, F), \text{ wobei:}"),
-    #         MathTex(r"Q \text{ ist eine endliche Menge von Zuständen;}"),
-    #         MathTex(r"\Sigma \text{ ist das Eingabealphabet (eine endliche nicht-leere Menge von Symbolen);}"),
-    #         MathTex(r"\delta \text{ ist die Zustandsübergangsfunktion: } Q \times \Sigma \rightarrow Q;"),
-    #         MathTex(r"q_0 \text{ ist der Anfangszustand, ein Element von } Q;"),
-    #         MathTex(r"F \text{ ist die Menge der Endzustände, eine Teilmenge von } Q.")
-    #     ).arrange(DOWN, aligned_edge=LEFT, buff=0.5)
-    #     self.components.scale(0.7)
-    #     self.components.to_edge(LEFT, buff=0.75)
-    #     self.play(LaggedStart(*[Write(comp) for comp in self.components], lag_ratio=0.9))  # Sequentially write the components with delay.
-    #     self.wait(4)
-    #     self.play(self.components.animate.scale(0.6).to_edge(LEFT, buff=0.3))
-    #     self.surrounding_rectangle = SurroundingRectangle(self.components, buff=.1, color="white")
-    #     self.play(Create(self.surrounding_rectangle))  
-    #     self.wait(2)  
+    def pokemon_components(self):
+        self.components = VGroup(
+            MathTex(r"Ein \text{ endlicher Automat ist ein 5-Tupel } (Q, \Sigma, \delta, q_0, F), \text{ wobei:}"),
+            MathTex(r"Q \text{ ist eine endliche Menge von Zuständen;}"),
+            MathTex(r"\Sigma \text{ ist das Eingabealphabet (eine endliche nicht-leere Menge von Symbolen);}"),
+            MathTex(r"\delta \text{ ist die Zustandsübergangsfunktion: } Q \times \Sigma \rightarrow Q;"),
+            MathTex(r"q_0 \text{ ist der Anfangszustand, ein Element von } Q;"),
+            MathTex(r"F \text{ ist die Menge der Endzustände, eine Teilmenge von } Q.")
+        ).arrange(DOWN, aligned_edge=LEFT, buff=0.5)
+        self.components.scale(0.7)
+        self.components.to_edge(LEFT, buff=0.75)
+        self.play(LaggedStart(*[Write(comp) for comp in self.components], lag_ratio=0.9))  # Sequentially write the components with delay.
+        self.wait(4)
+        self.play(self.components.animate.scale(0.6).to_edge(LEFT, buff=0.3))
+        self.surrounding_rectangle = SurroundingRectangle(self.components, buff=.1, color="white")
+        self.play(Create(self.surrounding_rectangle))  
+        self.wait(2)  
 
-    # def pokemon_components_math(self):
-    #     ############################Line 1############################
-    #     # Text parts of the expression
-    #     text1 = MathTex("Q = \\{").scale(0.5)
-    #     text2 = MathTex("\\}").scale(0.5)
-    #     text3 = MathTex(",").scale(0.5)
-    #     text4 = MathTex(",").scale(0.5)
+    def pokemon_components_math(self):
+        ############################Line 1############################
+        # Text parts of the expression
+        text1 = MathTex("Q = \\{").scale(0.5)
+        text2 = MathTex("\\}").scale(0.5)
+        text3 = MathTex(",").scale(0.5)
+        text4 = MathTex(",").scale(0.5)
 
-    #     # Image 
-    #     image1 = ImageMobject("../src/img/pokemon/PNG/charmander.png").scale(0.2)
-    #     image2 = ImageMobject("../src/img/pokemon/PNG/charmeleon.png").scale(0.2)
-    #     image3 = ImageMobject("../src/img/pokemon/PNG/charizard.png").scale(0.2)
+        # Image 
+        image1 = ImageMobject("../src/img/pokemon/PNG/charmander.png").scale(0.2)
+        image2 = ImageMobject("../src/img/pokemon/PNG/charmeleon.png").scale(0.2)
+        image3 = ImageMobject("../src/img/pokemon/PNG/charizard.png").scale(0.2)
 
-    #     # Positioning the objects
-    #     text1.next_to(self.components[1], RIGHT)
-    #     text1.to_edge(LEFT, buff=8) 
-    #     image1.next_to(text1, RIGHT, buff=0.1)
-    #     text3.next_to(image1, RIGHT, buff=0.1)
-    #     image2.next_to(text3, RIGHT, buff=0.1)
-    #     text4.next_to(image2, RIGHT, buff=0.1)
-    #     image3.next_to(text4, RIGHT, buff=0.1)
-    #     text2.next_to(image3, RIGHT, buff=0.1)
+        # Positioning the objects
+        text1.next_to(self.components[1], RIGHT)
+        text1.to_edge(LEFT, buff=8) 
+        image1.next_to(text1, RIGHT, buff=0.1)
+        text3.next_to(image1, RIGHT, buff=0.1)
+        image2.next_to(text3, RIGHT, buff=0.1)
+        text4.next_to(image2, RIGHT, buff=0.1)
+        image3.next_to(text4, RIGHT, buff=0.1)
+        text2.next_to(image3, RIGHT, buff=0.1)
 
-    #     # Add objects to the scene        
-    #     self.add(text1, image1, text3, image2, text4, image3, text2)
-    #     self.wait(4)
+        # Add objects to the scene        
+        self.add(text1, image1, text3, image2, text4, image3, text2)
+        self.wait(4)
 
-    #     ############################Line 2############################
-    #     # Text parts of the expression
-    #     text1 = MathTex("\Sigma = \\{").scale(0.5)
-    #     text2 = MathTex("\\}").scale(0.5)
-    #     text3 = MathTex(",").scale(0.5)
+        ############################Line 2############################
+        # Text parts of the expression
+        text1 = MathTex("\Sigma = \\{").scale(0.5)
+        text2 = MathTex("\\}").scale(0.5)
+        text3 = MathTex(",").scale(0.5)
         
-    #     # Image 
-    #     text16 = Text("Lvl 16").scale(0.3)
-    #     text36 = Text("Lvl 36").scale(0.3)
+        # Image 
+        text16 = Text("Lvl 16").scale(0.3)
+        text36 = Text("Lvl 36").scale(0.3)
 
-    #     # Positioning the objects
-    #     text1.next_to(self.components[2], RIGHT)
-    #     text1.to_edge(LEFT, buff=8)
-    #     text16.next_to(text1, RIGHT, buff=0.1)
-    #     text3.next_to(text16, RIGHT, buff=0.1)
-    #     text36.next_to(text3, RIGHT, buff=0.1)
-    #     text2.next_to(text36, RIGHT, buff=0.1)
+        # Positioning the objects
+        text1.next_to(self.components[2], RIGHT)
+        text1.to_edge(LEFT, buff=8)
+        text16.next_to(text1, RIGHT, buff=0.1)
+        text3.next_to(text16, RIGHT, buff=0.1)
+        text36.next_to(text3, RIGHT, buff=0.1)
+        text2.next_to(text36, RIGHT, buff=0.1)
 
-    #     # Add objects to the scene
-    #     self.add(text1, text16, text3, text36, text2)
-    #     self.wait(4)
-    #     ############################Line 1############################
-    #     # Text parts of the expression
-    #     text1 = MathTex("\delta :").scale(0.5)
-    #     text2 = MathTex(",").scale(0.5)
-    #     text3 = MathTex("+").scale(0.5)
-    #     text4 = MathTex(r"\rightarrow").scale(0.5)
-    #     text5 = MathTex("+").scale(0.5)
-    #     text6 = MathTex(r"\rightarrow").scale(0.5)
+        # Add objects to the scene
+        self.add(text1, text16, text3, text36, text2)
+        self.wait(4)
+        ############################Line 1############################
+        # Text parts of the expression
+        text1 = MathTex("\delta :").scale(0.5)
+        text2 = MathTex(",").scale(0.5)
+        text3 = MathTex("+").scale(0.5)
+        text4 = MathTex(r"\rightarrow").scale(0.5)
+        text5 = MathTex("+").scale(0.5)
+        text6 = MathTex(r"\rightarrow").scale(0.5)
 
-    #     # Image 
-    #     text16 = Text("Lvl 16").scale(0.3)
-    #     text36 = Text("Lvl 36").scale(0.3)
-    #     image1 = ImageMobject("../src/img/pokemon/PNG/charmander.png").scale(0.2)
-    #     image2 = ImageMobject("../src/img/pokemon/PNG/charmeleon.png").scale(0.2)
-    #     image2_2 = ImageMobject("../src/img/pokemon/PNG/charmeleon.png").scale(0.2)
-    #     image3 = ImageMobject("../src/img/pokemon/PNG/charizard.png").scale(0.2)
-    #     # Positioning the objects
-    #     text1.next_to(self.components[3], RIGHT)
-    #     text1.to_edge(LEFT, buff=8)
-    #     image1.next_to(text1, RIGHT, buff=0.1)
-    #     text3.next_to(image1, RIGHT, buff=0.1)
-    #     text16.next_to(text3, RIGHT, buff=0.1)
-    #     text4.next_to(text16, RIGHT, buff=0.1)
-    #     image2.next_to(text4, RIGHT, buff=0.1)
-    #     text2.next_to(image2, RIGHT, buff=0.1)
-    #     image2_2.next_to(text2, RIGHT, buff=0.1)
-    #     text5.next_to(image2_2, RIGHT, buff=0.1)
-    #     text36.next_to(text5, RIGHT, buff=0.1)
-    #     text6.next_to(text36, RIGHT, buff=0.1)
-    #     image3.next_to(text6, RIGHT, buff=0.1)
+        # Image 
+        text16 = Text("Lvl 16").scale(0.3)
+        text36 = Text("Lvl 36").scale(0.3)
+        image1 = ImageMobject("../src/img/pokemon/PNG/charmander.png").scale(0.2)
+        image2 = ImageMobject("../src/img/pokemon/PNG/charmeleon.png").scale(0.2)
+        image2_2 = ImageMobject("../src/img/pokemon/PNG/charmeleon.png").scale(0.2)
+        image3 = ImageMobject("../src/img/pokemon/PNG/charizard.png").scale(0.2)
+        # Positioning the objects
+        text1.next_to(self.components[3], RIGHT)
+        text1.to_edge(LEFT, buff=8)
+        image1.next_to(text1, RIGHT, buff=0.1)
+        text3.next_to(image1, RIGHT, buff=0.1)
+        text16.next_to(text3, RIGHT, buff=0.1)
+        text4.next_to(text16, RIGHT, buff=0.1)
+        image2.next_to(text4, RIGHT, buff=0.1)
+        text2.next_to(image2, RIGHT, buff=0.1)
+        image2_2.next_to(text2, RIGHT, buff=0.1)
+        text5.next_to(image2_2, RIGHT, buff=0.1)
+        text36.next_to(text5, RIGHT, buff=0.1)
+        text6.next_to(text36, RIGHT, buff=0.1)
+        image3.next_to(text6, RIGHT, buff=0.1)
 
-    #     # Add objects to the scene
-    #     self.add(text1, image1, text3, text16, text4, image2, text2, image2_2, text5, text36, text6, image3)
-    #     self.wait(4)
-    #     ############################Line 4############################
-    #      # Text parts of the expression
-    #     text1 = MathTex(r"q_0 = ").scale(0.5)
-    #     text2 = MathTex(r"\in Q").scale(0.5)
+        # Add objects to the scene
+        self.add(text1, image1, text3, text16, text4, image2, text2, image2_2, text5, text36, text6, image3)
+        self.wait(4)
+        ############################Line 4############################
+         # Text parts of the expression
+        text1 = MathTex(r"q_0 = ").scale(0.5)
+        text2 = MathTex(r"\in Q").scale(0.5)
 
-    #     # Image 
-    #     image1 = ImageMobject("../src/img/pokemon/PNG/charmander.png").scale(0.2)
+        # Image 
+        image1 = ImageMobject("../src/img/pokemon/PNG/charmander.png").scale(0.2)
 
-    #     # Positioning the objects
-    #     text1.next_to(self.components[4], RIGHT)
-    #     text1.to_edge(LEFT, buff=8)
-    #     image1.next_to(text1, RIGHT, buff=0.1)
-    #     text2.next_to(image1, RIGHT, buff=0.1)
+        # Positioning the objects
+        text1.next_to(self.components[4], RIGHT)
+        text1.to_edge(LEFT, buff=8)
+        image1.next_to(text1, RIGHT, buff=0.1)
+        text2.next_to(image1, RIGHT, buff=0.1)
     
-    #     # Add objects to the scene
-    #     self.add(text1, image1, text2)
-    #     self.wait(4)
-    #     ############################Line 5############################
+        # Add objects to the scene
+        self.add(text1, image1, text2)
+        self.wait(4)
+        ############################Line 5############################
 
-    #     # Text parts of the expression
-    #     text1 = MathTex(r"F = \{").scale(0.5)
-    #     text2 = MathTex(r"\} \subseteq Q").scale(0.5)
+        # Text parts of the expression
+        text1 = MathTex(r"F = \{").scale(0.5)
+        text2 = MathTex(r"\} \subseteq Q").scale(0.5)
 
-    #     # Image
-    #     image1 = ImageMobject("../src/img/pokemon/PNG/charizard.png").scale(0.2)
+        # Image
+        image1 = ImageMobject("../src/img/pokemon/PNG/charizard.png").scale(0.2)
 
-    #     # Positioning the objects
-    #     text1.next_to(self.components[5], RIGHT)
-    #     text1.to_edge(LEFT, buff=8)
-    #     image1.next_to(text1, RIGHT, buff=0.1)
-    #     text2.next_to(image1, RIGHT, buff=0.1)
+        # Positioning the objects
+        text1.next_to(self.components[5], RIGHT)
+        text1.to_edge(LEFT, buff=8)
+        image1.next_to(text1, RIGHT, buff=0.1)
+        text2.next_to(image1, RIGHT, buff=0.1)
     
-    #     # Add objects to the scene
-    #     self.add(text1, image1, text2)
-    #     self.wait(4)
+        # Add objects to the scene
+        self.add(text1, image1, text2)
+        self.wait(4)
 
-    #     self.clear()
+        self.clear()
 
 #########################################################
 ###########################DEA###########################
@@ -784,7 +784,8 @@ class Main(MovingCameraScene):
         self.wait(2)
 
         # DEA graph 
-        self.play(FadeIn(dea_graph, scale=0.6))
+        dea_graph.next_to(dea_title_shortcut, DOWN, buff =.8)
+        self.play(FadeIn(dea_graph, scale=0.15))
         self.wait(3)  
 
         # Fadeout DEA 
@@ -813,7 +814,7 @@ class Main(MovingCameraScene):
 
         custom_values = [
             [" ", "a", "b"],
-            [1, 2, 1],
+            [1, "{1,2}", 1],
             [2, 1, 3],
             [3, 3, 3]
         ]
@@ -890,7 +891,7 @@ class Main(MovingCameraScene):
         self.components_text= VGroup(
             MathTex("Q = \\{1, 2, 3\\}"),
             MathTex("\Sigma = \\{a, b\\}"),
-            MathTex(r"\delta : 1 + a \rightarrow 2 ; 1 + b \rightarrow 1 ; 2 + a \rightarrow 1 ;"),
+            MathTex(r"\delta :1 + a \rightarrow 1; 1 + a \rightarrow 2 ; 1 + b \rightarrow 1 ; 2 + a \rightarrow 1 ;"),
             MathTex(r"  2 + b \rightarrow 3 ; 3 + a \rightarrow 3 ; 3 + b \rightarrow 3"),
             MathTex(r"q_0 = 1 \in Q"),
             MathTex(r"F = \{3\} \subseteq Q")
@@ -1115,7 +1116,7 @@ class Main(MovingCameraScene):
         rect_around_1_green = SurroundingRectangle(self.nea_circle1, color=GREEN)       
         rect_around_2_green = SurroundingRectangle(self.nea_circle2, color=GREEN)
         rect_around_3_green = SurroundingRectangle(self.nea_circle3, color=GREEN)
-        
+
         #arrows
         arrow1_green = Arrow(start=self.nea_circle1.get_top() + DOWN * 0.4, end=self.nea_circle2.get_top() + DOWN * 0.4, buff=0.7, color=GREEN)
         arrow2_green = Arrow(start=self.nea_circle2.get_top() + DOWN * 0.4, end=self.nea_circle3.get_top() + DOWN * 0.4, buff=0.7, color=GREEN)
@@ -1239,6 +1240,28 @@ class Main(MovingCameraScene):
         self.play(FadeIn(element7))
         self.wait(2)
         self.remove(rect_around_a4_green)
+        
+        nea_results_table_2.set_color(GREEN)
+        self.play(Create(nea_results_table_2))
+        self.wait(1)
+        # add chekmark at the end of the sequence
+        checkmark2 = Text("✓", font_size=50, color=GREEN).next_to(text_sequence, RIGHT)
+        self.add(checkmark2)
+        self.remove(checkmark2)
+
+        self.wait(4)
+        example_group = Group(text_sequence, nea_results_table_2, self.nea_all_elements, 
+                        rect_around_1_green, rect_around_2_green, rect_around_3_green,
+                        arrow1_green, arrow2_green, arrow3_green, arrow4_green, arrow5_green)
+        
+        self.play(example_group.animate.move_to(UP))
+        self.wait(1)
+
+        nea_results_table.next_to(nea_results_table_2, DOWN, buff = 0.7)
+        nea_results_table.set_color(RED)
+        self.play(FadeIn(nea_results_table))
+        self.wait(1)
+        
 #########################################################
 #########################DEA&NEA#########################
 #########################################################
