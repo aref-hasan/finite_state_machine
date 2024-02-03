@@ -3,15 +3,14 @@ import cv2
 from manim_voiceover import VoiceoverScene
 from manim.scene.moving_camera_scene import MovingCameraScene
 from manim_voiceover.services.gtts import GTTSService
-from manim_voiceover.services.recorder import RecorderService
-
 
 ##############################################################################################################
 ################################################MAIN##########################################################
 ##############################################################################################################
-
-class Main(MovingCameraScene):
+class Main(MovingCameraScene, VoiceoverScene):
     def construct(self):
+        self.set_speech_service(GTTSService(lang="de"))
+
         #self.greeting()
         #self.welcome()
         #self.pokemon_logo()
@@ -32,14 +31,11 @@ class Main(MovingCameraScene):
         self.nea_components()
         self.nea_titles()
         self.nea_example()
-        # DEA & NEA
-        #self.dea_vs_nea()
-        #self.aktzeptoren()
 
     def greeting(self):
         text = Text("Hallo Zusammen!", font_size= 50)
         self.play(Write(text))
-        self.wait(3)  
+        self.wait(1)
         self.clear()
 
     def welcome(self):
@@ -48,17 +44,20 @@ class Main(MovingCameraScene):
                             color=WHITE)
 
         welcome_text.move_to(ORIGIN)
-        self.wait(3)
+        self.play(Write(welcome_text))
         self.play(FadeOut(welcome_text))
 
     def pokemon_logo(self):
         self.image_logo = ImageMobject("../src/img/pokemon/pokemon_logo.png").scale(0.7)
         self.image_logo.move_to(ORIGIN)
-
+        title_text = Text("Endliche Zustandsautomaten", 
+                            font_size=48, 
+                            color=WHITE)
+       
+        self.play(Write(title_text))
+        self.play(FadeOut(title_text))
         self.play(FadeIn(self.image_logo))
-        self.wait(4)
-        
-        #self.play(ShrinkToCenter(self.image_logo))
+        self.wait(34)
 
     def vid(self):
         self.play(ShrinkToCenter(self.image_logo))
@@ -108,7 +107,7 @@ class Main(MovingCameraScene):
         self.play(FadeIn(state3_img))
         self.wait(3)
         self.play(Create(circle_around_state3))
-
+        self.wait(35)
          # Transform the entire group
         self.play(all_elements.animate.scale(0.6).to_edge(UP))
 
@@ -123,8 +122,15 @@ class Main(MovingCameraScene):
         ).arrange(DOWN, aligned_edge=LEFT, buff=0.5)
         self.components.scale(0.7)
         self.components.to_edge(LEFT, buff=0.75)
-        self.play(LaggedStart(*[Write(comp) for comp in self.components], lag_ratio=0.9))  # Sequentially write the components with delay.
-        self.wait(4)
+       # Define specific times for each component's animation
+        times = [6, 6, 11, 14, 8, 6]  # Example times, adjust as needed
+
+        # Play each component's animation with the specified delay
+        for comp, time in zip(self.components, times):
+            self.play(Write(comp))
+            self.wait(time)  # Wait for the specified time before the next animation
+
+        self.wait(6)
         self.play(self.components.animate.scale(0.6).to_edge(LEFT, buff=0.3))
         self.surrounding_rectangle = SurroundingRectangle(self.components, buff=.1, color="white")
         self.play(Create(self.surrounding_rectangle))  
@@ -177,7 +183,7 @@ class Main(MovingCameraScene):
 
         # Add objects to the scene
         self.add(text1, text16, text3, text36, text2)
-        self.wait(4)
+        self.wait(7)
         ############################Line 1############################
         # Text parts of the expression
         text1 = MathTex("\delta :").scale(0.5)
@@ -211,7 +217,7 @@ class Main(MovingCameraScene):
 
         # Add objects to the scene
         self.add(text1, image1, text3, text16, text4, image2, text2, image2_2, text5, text36, text6, image3)
-        self.wait(4)
+        self.wait(23)
         ############################Line 4############################
          # Text parts of the expression
         text1 = MathTex(r"q_0 = ").scale(0.5)
@@ -228,7 +234,7 @@ class Main(MovingCameraScene):
     
         # Add objects to the scene
         self.add(text1, image1, text2)
-        self.wait(4)
+        self.wait(5)
         ############################Line 5############################
 
         # Text parts of the expression
@@ -246,9 +252,10 @@ class Main(MovingCameraScene):
     
         # Add objects to the scene
         self.add(text1, image1, text2)
-        self.wait(4)
+        self.wait(7)
 
         self.clear()
+        self.wait(17)
 
 #########################################################
 ###########################DEA###########################
@@ -307,14 +314,14 @@ class Main(MovingCameraScene):
         arrow_3 = CurvedArrow(start_point_3, end_point_3, color=WHITE, angle= 3)
 
         # curved arrow labels
-        label_1 = Text("b", font_size=24, color=WHITE)
+        self.label_1 = Text("b", font_size=24, color=WHITE)
         label_3 = Text("a, b", font_size=24, color=WHITE)
         label_offset = np.array([0.2, 0.2, 0])
-        label_1.move_to(arrow_1.point_from_proportion(0.5) + label_offset)
+        self.label_1.move_to(arrow_1.point_from_proportion(0.5) + label_offset)
         label_3.move_to(arrow_3.point_from_proportion(0.5) + label_offset)
 
 
-        self.dea_all_elements = Group(diagonal_arrow, self.circle1, self.text1c, arrow_1, label_1, arrow1, label1,
+        self.dea_all_elements = Group(diagonal_arrow, self.circle1, self.text1c, arrow_1, self.label_1, arrow1, label1,
                                     arrow3, label3, self.circle2, self.text2c, arrow2, label2, self.circle3, self.text3c, arrow_3,
                                     label_3, circle_around_state3)
 
@@ -324,39 +331,20 @@ class Main(MovingCameraScene):
         ###################Scene Animations###################
         # DEA Title
         self.play(Write(self.dea_long), run_time=3)
-        self.wait(2)  
+        self.wait(1)  
         self.play(FadeOut(self.dea_long), run_time = 1)
 
         # DEA shortcut
         self.play(Write(self.dea_short))  
-        self.wait(2)
+        self.wait(1)
 
         self.play(self.dea_short.animate.to_edge(UP)) 
         self.wait(2)
 
         # DEA Graph
-        self.play(Create(diagonal_arrow))
-        self.wait(3)
-        self.play(FadeIn(self.circle1), Write(self.text1c))
-        self.wait(3)
-        self.play(Create(arrow_1), Write(label_1)) 
-        self.wait(3)
-        self.play(Create(arrow1), Write(label1))
-        self.wait(3)
-        self.play(Create(arrow3), Write(label3))
-        self.wait(3)
-        self.play(FadeIn(self.circle2), Write(self.text2c))  
-        self.wait(3)
-        self.play(Create(arrow2), Write(label2))
-        self.wait(3)
-        self.play(FadeIn(self.circle3), Write(self.text3c))
-        self.wait(3)
-        self.play(Create(arrow_3), Write(label_3))  
-        self.wait(3)
-        self.play(Create(circle_around_state3))
+        self.play(Create(diagonal_arrow),FadeIn(self.circle1), Write(self.text1c), Create(arrow_1), Write(self.label_1), Create(arrow1), Write(label1),Create(arrow3), Write(label3),FadeIn(self.circle2), Write(self.text2c), Create(arrow2), Write(label2), FadeIn(self.circle3), Write(self.text3c), Create(arrow_3), Write(label_3),Create(circle_around_state3))
         
-        self.wait(4)
-
+        self.wait(20)
         self.play(self.dea_all_elements.animate.next_to(self.dea_short, UP, buff = - 3.2).scale(0.6))
 
     def dea_table(self):
@@ -407,26 +395,26 @@ class Main(MovingCameraScene):
         red_rectangle1.surround(self.text1c)
 
         red_rectangle2 = Rectangle(color=RED).scale(0.3)
-        red_rectangle2.surround(self.text1c)
+        red_rectangle2.surround(self.label_1)
 
 
         # table
         self.play(Create(self.t1))
-        self.wait(2)
+        self.wait(4)
         self.add(text1, arrow1)
-        self.wait(2)
+        self.wait(3)
         self.add(red_rectangle1)
-        self.wait(2)
+        self.wait(3)
         self.remove(red_rectangle1)
         self.add(text2, arrow2)
-        self.wait(2)
+        self.wait(3)
         self.add(red_rectangle2)
-        self.wait(2)
+        self.wait(3)
         self.remove(red_rectangle2)
         self.add(text3, arrow3)
-        self.wait(2)
+        self.wait(3)
         self.add(red_rectangle1)         
-        self.wait(4)
+        self.wait(6)
         
 
         self.play(FadeOut(text1, arrow1, text2, arrow2, text3, arrow3, red_rectangle1))
@@ -444,14 +432,21 @@ class Main(MovingCameraScene):
             MathTex(r"q_0 = 1 \in Q"),
             MathTex(r"F = \{3\} \subseteq Q")
         ).arrange(DOWN, aligned_edge=LEFT, buff=0.5)
+        self.wait(7)
         self.components.scale(0.7)
         self.components.next_to(self.t1.get_cell((2, 3)), RIGHT, buff=3.5)
-        self.play(LaggedStart(*[Write(comp) for comp in self.components], lag_ratio=0.9))  # Sequentially write the components with delay.
-        self.wait(2)  
+         # Define specific times for each component's animation
+        times = [3, 1, 0.3, 0.5, 1, 1]  # Example times, adjust as needed
+
+        # Play each component's animation with the specified delay
+        for comp, time in zip(self.components, times):
+            self.play(Write(comp))
+            self.wait(time)  # Wait for the specified time before the next animation
+
+         
         self.play(self.components.animate.scale(0.85).to_edge(RIGHT + DOWN, buff=1))
         self.surrounding_rectangle_components= SurroundingRectangle(self.components, buff=.1, color="white")
         self.play(Create(self.surrounding_rectangle_components)) 
-        self.wait(4)
         
     def dea_titles(self):
         text_1 = Text("Übergangstabelle",font_size=36, color=WHITE).next_to(self.t1, UP)
@@ -461,11 +456,9 @@ class Main(MovingCameraScene):
         titles = Group(text_1,text_2, text_3)
         
         self.play(FadeIn(titles))
-        
+        self.wait(2)
         self.play(FadeOut(titles, self.surrounding_rectangle_components, self.t1, self.components))
-        
-        self.wait(4)
-        
+             
     def dea_example(self):
         self.play(self.dea_all_elements.animate.move_to(ORIGIN + LEFT * 0.6))
         self.play(self.dea_all_elements.animate.scale(1/0.6))
@@ -484,6 +477,7 @@ class Main(MovingCameraScene):
             self.play(question_mark.animate.scale(1.2), run_time=0.5)
             self.play(question_mark.animate.scale(0.001), run_time=0.9)
 
+        self.wait(17)
         # go through the sequence in the Übergangstabelle
         rect_around_a1 = SurroundingRectangle(text_sequence[8], color=RED)
         rect_around_a2 = SurroundingRectangle(text_sequence[9], color=RED)
@@ -553,40 +547,40 @@ class Main(MovingCameraScene):
         self.wait(2)
         self.remove(rect_around_1)
         self.add(arrow4_red)
-        self.wait(2)
+        self.wait(1)
         self.remove(arrow4_red)
         self.add(rect_around_1)
-        self.wait(2)
+        self.wait(1)
         self.remove(rect_around_1)
         self.wait(1)
         self.remove(rect_around_b1)
 
         # 3. a in sequence
         self.add(rect_around_a3)
-        self.wait(2)
+        self.wait(1)
         self.add(rect_around_1)
-        self.wait(2)
+        self.wait(1)
         self.remove(rect_around_1)
         self.add(arrow1_red)
-        self.wait(2)
+        self.wait(1)
         self.remove(arrow1_red)
         self.add(rect_around_2)
-        self.wait(2)
+        self.wait(1)
         self.remove(rect_around_2)
         self.wait(1)
         self.remove(rect_around_a3)
 
         # 2. b in sequence
         self.add(rect_around_b2)
-        self.wait(2)
+        self.wait(1)
         self.add(rect_around_2)
-        self.wait(2)
+        self.wait(1)
         self.remove(rect_around_2)
         self.add(arrow2_red)
-        self.wait(2)
+        self.wait(1)
         self.remove(arrow2_red)
         self.add(rect_around_3)
-        self.wait(2)
+        self.wait(1)
         self.remove(rect_around_3)
         self.wait(1)
         self.remove(rect_around_b2)
@@ -609,15 +603,18 @@ class Main(MovingCameraScene):
         # add chekmark at the end of the sequence
         checkmark = Text("✓", font_size=50, color=GREEN).next_to(text_sequence, RIGHT)
         self.add(checkmark)
-        self.wait(2)
+        self.wait(9)
 
         self.clear()
+
 
 #########################################################
 ###########################NEA###########################
 #########################################################
         
     def nea_intro(self):
+        self.set_speech_service(GTTSService(lang="de"))
+
         # NEA title shortcut
         nea_long = Text("Nichtdeterministische endliche Automaten", font_size= 50)
 
@@ -632,38 +629,48 @@ class Main(MovingCameraScene):
 
         ###################Scene Animations###################
         # DEA title 
-        self.play(Write(self.dea_long), run_time=3)
-        self.wait(2)  
+        with self.voiceover(text="Zunächst haben wir uns mit deterministischen endlichen Automaten befasst.") as tracker_dea_long:
+            self.wait(3)
+            self.play(Write(self.dea_long), run_time=tracker_dea_long.duration)
         self.play(FadeOut(self.dea_long), run_time = 1)
 
         # NEA title
-        self.play(Write(nea_long), run_time=3)
-        self.wait(1)  
+        with self.voiceover(text="Jetzt wollen wir uns die andere Seite anschauen, nämlich die nichtdeterministischen endlichen Automaten") as tracker_nea_long:
+            self.play(Write(nea_long), run_time=tracker_nea_long.duration)
         self.play(FadeOut(nea_long))
 
         # NEA title shortcut
-        self.play(Write(self.nea))  
+        with self.voiceover(text="Kurzgesagt NEA") as tracker_nea:
+            self.play(Write(self.nea), run_time=tracker_nea.duration)  
         self.wait(2)
 
         # question mark
-        self.play(Write(question_mark))
-        for _ in range(2): 
-            self.play(question_mark.animate.scale(1.2), run_time=0.5)
-            self.play(question_mark.animate.scale(0.8), run_time=0.5)
-            self.play(question_mark.animate.scale(1.2), run_time=0.5)
-            self.play(question_mark.animate.scale(0.001), run_time=0.9)
+        with self.voiceover(text="Aber was genau bedeutet NEA und worin unterscheiden sie sich von deterministischen endlichen Automaten") as tracker_question_mark:
+            self.play(Write(question_mark),run_time=tracker_question_mark.duration)
+            for _ in range(2): 
+                self.play(question_mark.animate.scale(1.2), run_time=0.5)
+                self.play(question_mark.animate.scale(0.8), run_time=0.5)
+                self.play(question_mark.animate.scale(1.2), run_time=0.5)
+                self.play(question_mark.animate.scale(0.001), run_time=0.9)
 
         # NEA description 
-        self.play(Write(nea_description))
-        self.wait(6)
+        with self.voiceover(text="""Ähnlich wie ein D E A ist auch ein NEA ein endlicher Automat, der als Berechnungsmodell für formale Sprachen dient.
+                                Das bedeutet, dass wir auch hier, wie im Beispiel des DEA, berechnen können, ob ein Wort in der Sprache enthalten ist oder nicht.
+                                Im Gegensatz zu einem DEA arbeitet ein NEA nichtdeterministisch. Das bedeutet, dass bei einem NEA eine Eingabe zu mehreren
+                                verschiedenen Zuständen führen kann. Er hat also mehrere Möglichkeiten für den Folgezustand."""):
+            self.wait(22)
+            self.play(Write(nea_description))
+        self.wait(1)
         self.play(FadeOut(nea_description))
-        self.wait(2)
+        self.wait()
 
         # move NEA shortcut up
         self.play(self.nea.animate.to_edge(UP))  
         self.wait(2)
 
     def nea_graph(self):
+        self.set_speech_service(GTTSService(lang="de"))
+
         # The 3 begining circles
         self.nea_circle2 = Circle(radius=0.6, color=BLUE)
         self.nea_circle2.move_to(ORIGIN)
@@ -738,7 +745,8 @@ class Main(MovingCameraScene):
 
         # DEA
         dea_title_shortcut = Text("DEA", font_size=50).scale(0.7).to_edge(UP).to_edge(LEFT, buff=2.8)
-        dea_graph = self.dea_all_elements.to_edge(LEFT, buff=0.5)
+        dea_graph = self.dea_all_elements.to_edge(LEFT, buff=0.5).scale(0.65)
+        dea_graph.next_to(dea_title_shortcut, DOWN, buff =0.7)
 
 
         ###################Scene Animations###################
@@ -763,31 +771,32 @@ class Main(MovingCameraScene):
         # self.wait(3)
         # self.play(Create(circle_around_state3))
         # self.wait(5)
-        self.play(FadeIn(self.nea_graph_elements))
-        self.wait(5)
+        with self.voiceover(text="Nehmen wir als Beispiel den Anfangszustand"):
+            self.wait(2)
+            self.play(FadeIn(self.nea_graph_elements))
+            self.wait(3)
 
         #red rectangle (a,b)
-        self.play(Create(self.red_surrounding_rectangle))  
-        self.wait(2)
-
+        with self.voiceover(text="Bei der Eingabe 'a' kann der Automat entweder in Zustand 1 verbleiben oder zum Zustand 2 wechseln"):
+            self.wait(2)
+            self.play(Create(self.red_surrounding_rectangle))
+            self.wait(1)
         #red rectangle (a)
-        self.play(Create(self.red_surrounding_rectangle_a))  
-        self.wait(2)
+            self.play(Create(self.red_surrounding_rectangle_a))  
+            self.wait(3)
 
         # move NEA
         nea_animations = AnimationGroup(nea_graph_animation,nea_title_animation)
         self.play(nea_animations)
-        
+
+        with self.voiceover(text="Wenn Wir den NEA Graph mit der Vorherigen D E A graph vergleichen sehen wir, dass bei den D E A Graphen bei der Eingabe 'a' nur eine Möglichkeit für den Folgezustand, nämlich Zustand 2."):
         # show DEA 
         # DEA title
-        self.play(FadeIn(dea_title_shortcut, shift=DOWN))
-        self.wait(2)
-
-        # DEA graph 
-        dea_graph.next_to(dea_title_shortcut, DOWN, buff =.8)
-        self.play(FadeIn(dea_graph, scale=0.15))
-        self.wait(3)  
-
+            self.play(FadeIn(dea_title_shortcut, shift=DOWN))
+        # DEA graph
+            self.play(FadeIn(dea_graph))
+            self.wait(8)  
+        
         # Fadeout DEA 
         self.play(FadeOut(dea_graph,dea_title_shortcut))
         self.wait(1)
@@ -795,11 +804,11 @@ class Main(MovingCameraScene):
         # move NEA title back
         nea_title_animation = self.nea.animate.move_to(UP * 3.5)  
         self.play(nea_title_animation)
-
+        
         # move NEA graph back
         self.nea_all_elements.remove(self.red_surrounding_rectangle, self.red_surrounding_rectangle_a)
         self.nea_all_elements.next_to(self.nea, UP, buff= - 2.4)
-        
+
         #nea_graph_animation = self.nea_all_elements.animate.next_to(self.nea, UP, buff= - 2.4)
         #self.red_surrounding_rectangle_animation = FadeOut(self.red_surrounding_rectangle)
         #self.red_surrounding_rectangle_a_animation = FadeOut(self.red_surrounding_rectangle_a)
@@ -863,29 +872,29 @@ class Main(MovingCameraScene):
         ###################Scene Animations###################
 
         # table
-        self.play(Create(self.nea_t1))
-        self.wait(2)
-        self.add(nea_t1_text1, arrow1)
-        self.wait(2)
-        self.add(red_rectangle1)
-        self.wait(2)
-        self.remove(red_rectangle1)
-        self.add(self.nea_t1_text2, arrow2)
-        self.wait(2)
-        self.add(red_rectangle2)
-        self.wait(2)
-        self.remove(red_rectangle2)
-        self.add(self.nea_t1_text3, arrow3)
-        self.wait(2)
-        self.add(red_rectangle1)         
-        self.wait(4)
-        
+        with self.voiceover(text="Wenn wir uns die Zustandstabelle des NEA anschauen, wird der Unterschied deutlicher."):
+            self.play(Create(self.nea_t1))
+            self.wait(5)
+            with self.voiceover(text="Zustand 1 sieht man, dass bei der Eingabe 'a' zwei mögliche Folgezustände existieren: entweder bleibt der Automat im Zustand 1 oder wechselt zum Zustand 2. Alle anderen Übergänge bleiben unverändert, da der Graph nur an dieser Stelle geändert wurde."):
+                self.add(nea_t1_text1, arrow1)
+                self.wait(2)
+                self.add(red_rectangle1)
+                self.wait(2)
+                self.remove(red_rectangle1)
+                self.add(self.nea_t1_text2, arrow2)
+                self.wait(2)
+                self.add(red_rectangle2)
+                self.wait(2)
+                self.remove(red_rectangle2)
+                self.add(self.nea_t1_text3, arrow3)
+                self.wait(2)
+                self.add(red_rectangle1)         
+                self.wait(10)
+                self.play(FadeOut(nea_t1_text1, arrow1, self.nea_t1_text2, arrow2, self.nea_t1_text3, arrow3, red_rectangle1))
+                self.wait(1)
 
-        self.play(FadeOut(nea_t1_text1, arrow1, self.nea_t1_text2, arrow2, self.nea_t1_text3, arrow3, red_rectangle1))
-        self.wait(2)
-
-        self.play(self.nea_t1.animate.to_edge(LEFT))
-        self.wait(2)
+            self.play(self.nea_t1.animate.to_edge(LEFT))
+            self.wait(2)
 
     def nea_components(self):
         self.components_text= VGroup(
@@ -904,14 +913,18 @@ class Main(MovingCameraScene):
 
         ###################Scene Animations###################
         # components
-        self.play(LaggedStart(*[Write(comp) for comp in self.components_text], lag_ratio=0.9))  # Sequentially write the components with delay.
-        self.wait(2)  
-        self.play(self.components_text.animate.scale(0.85).to_edge(RIGHT + DOWN, buff=1))
-        
-        # rectangle
-        self.surrounding_rectangle_components_nea= SurroundingRectangle(self.components_text, buff=.1, color="white")
-        self.play(Create(self.surrounding_rectangle_components_nea)) 
-        self.wait(4)
+        with self.voiceover(text="Hinsichtlich der Bestandteile des NEA sind diese im Beispiel ähnlich wie beim D E A."):
+
+            self.play(LaggedStart(*[Write(comp) for comp in self.components_text], lag_ratio=0.9))  # Sequentially write the components with delay.
+            self.wait(2)  
+            self.play(self.components_text.animate.scale(0.85).to_edge(RIGHT + DOWN, buff=1))
+            self.wait(1)  
+
+        with self.voiceover(text="Der einzige Unterschied ist, dass die Zustandsübergangsfunktionen im ersten Zustand bei der Eingabe 'a' zwei verschiedene Folgezustände ermöglichen."):
+            # rectangle
+            self.surrounding_rectangle_components_nea= SurroundingRectangle(self.components_text, buff=.1, color="white")
+            self.play(Create(self.surrounding_rectangle_components_nea)) 
+            self.wait(4)
 
     def nea_titles(self):
         text_1 = Text("Übergangstabelle",font_size=36, color=WHITE).next_to(self.nea_t1, UP)
@@ -919,19 +932,20 @@ class Main(MovingCameraScene):
         text_3 = Text("Übergangsdiagramm",font_size=36, color=WHITE).next_to(text_1, UP, buff = 1)
 
         titles = Group(text_1,text_2, text_3)
-
-        ###################Scene Animations###################
-
+       
         self.play(FadeIn(titles))
-        self.wait(4)
-        self.play(FadeOut(titles, self.surrounding_rectangle_components_nea, self.nea_t1, self.components_text))
-        self.wait(4)
+        self.wait(3)
+        ###################Scene Animations###################
+        with self.voiceover(text="Lass uns mal den NEA anhand eines Beispiels besser verstehen."):
+            self.play(FadeOut(titles, self.surrounding_rectangle_components_nea, self.nea_t1, self.components_text))
+            self.wait(2)
     
     def nea_example(self):
         # move nea graph down
         self.play(self.nea_all_elements.animate.move_to(ORIGIN + LEFT * 0.5))
         self.play(self.nea_all_elements.animate.scale(1/0.6))
-        self.wait(4)
+        self.wait(2)
+
 
 
         # add test sequence
@@ -944,15 +958,17 @@ class Main(MovingCameraScene):
         ###################Scene Animations###################
         
         # add the example
-        self.add(text_sequence)
-        self.wait(4)
+        with self.voiceover(text="Wir verwenden die gleiche Sequenz wie beim 'D E A': 'a',,,, 'a',,,,, 'b',,,, 'a',,,, 'b',,,, 'a'. Die Frage ist, wie der resultierende Zustand aussieht."):
 
-        self.play(Write(question_mark))
-        for _ in range(2): 
-            self.play(question_mark.animate.scale(1.2), run_time=0.5)
-            self.play(question_mark.animate.scale(0.8), run_time=0.5)
-            self.play(question_mark.animate.scale(1.2), run_time=0.5)
-            self.play(question_mark.animate.scale(0.001), run_time=0.9)
+            self.play(Write(text_sequence))
+            self.wait(7)
+
+            self.play(Write(question_mark))
+            for _ in range(2): 
+                self.play(question_mark.animate.scale(1.2), run_time=0.5)
+                self.play(question_mark.animate.scale(0.8), run_time=0.5)
+                self.play(question_mark.animate.scale(1.2), run_time=0.5)
+                self.play(question_mark.animate.scale(0.001), run_time=0.9)
 
         # go through the sequence in the Übergangstabelle
         rect_around_a1 = SurroundingRectangle(text_sequence[8], color=RED)
@@ -998,112 +1014,120 @@ class Main(MovingCameraScene):
         self.wait(2)
         element = nea_results_table.get_entries((1, 1))
         self.play(FadeIn(element))
-        self.wait(2)
+        self.wait(1)
 
         # 1. a in sequence
-        self.add(rect_around_a1)
-        self.wait(2)
-        self.add(arrow1_red)
-        self.wait(2)
-        self.add(arrow4_green)
-        self.wait(1)
-        self.remove(arrow4_green)
-        self.remove(arrow1_red)
-        self.wait(1)
-        self.add(arrow1_red)
-        self.wait(0.5)
-        self.add(rect_around_2)
-        self.wait(2)
-        element2 = nea_results_table.get_entries((1, 2))
-        self.play(FadeIn(element2))        
-        self.wait(2)
-        self.remove(rect_around_a1)
-
+        with self.voiceover(text="""Unser Anfangszustand ist '1'. Bei der ersten Eingabe 'a' hat man zwei Möglichkeiten:
+                                 Entweder wechselt man zum Zustand 2 oder bleibt im Zustand 1. Wir betrachten beide Optionen.
+                                 Wählen wir zuerst den Übergang zum Zustand 2. Bei der zweiten Eingabe 'a' kehren wir zum Zustand 1 zurück.
+                                 Bei der dritten Eingabe 'b' bleiben wir im Zustand 1. """):
+            self.add(rect_around_a1)
+            self.wait(4)
+            self.add(arrow1_red)
+            self.wait(3)
+            self.add(arrow4_green)
+            self.wait(3)
+            self.remove(arrow4_green)
+            self.remove(arrow1_red)
+            self.wait(2)
+            self.add(arrow1_red)
+            self.wait(0.5)
+            self.add(rect_around_2)
+            self.wait(1)
+            element2 = nea_results_table.get_entries((1, 2))
+            self.play(FadeIn(element2))        
+            self.wait(1)
+            self.remove(rect_around_a1)
         # 2. a in sequence
-        self.add(rect_around_a2)
-        self.wait(2)
-        self.remove(rect_around_2)
-        self.wait(0.5)
-        self.add(rect_around_2)
-        self.wait(2)
-        element3 = nea_results_table.get_entries((1, 3))
-        self.play(FadeIn(element3))      
-
-        self.add(arrow3_red)
-        self.wait(2)
-        self.remove(rect_around_1)
-        self.add(rect_around_1)
-        self.wait(2)
-        self.remove(rect_around_a2)
-
+            self.add(rect_around_a2)
+            self.wait(1)
+            self.remove(rect_around_2)
+            self.wait(0.5)
+            self.add(rect_around_2)
+            self.wait(2)
+            element3 = nea_results_table.get_entries((1, 3))
+            self.play(FadeIn(element3))      
+            self.add(arrow3_red)
+            self.wait(2)
+            self.remove(rect_around_1)
+            self.add(rect_around_1)
+            self.wait(2)
+            self.remove(rect_around_a2)
         # 1. b in sequence
-        self.add(rect_around_b1)
-        self.wait(2)
-        self.add(arrow4_red)
-        self.wait(2)
-        self.remove(rect_around_1)
-        self.wait(0.5)
-        self.add(rect_around_1)
-        element4 = nea_results_table.get_entries((1, 4))
-        self.play(FadeIn(element4))  
-        self.wait(2)
-        self.remove(rect_around_b1)
+            self.add(rect_around_b1)
+            self.wait(1)
+            self.add(arrow4_red)
+            self.wait(1)
+            self.remove(rect_around_1)
+            self.wait(0.5)
+            self.add(rect_around_1)
+            element4 = nea_results_table.get_entries((1, 4))
+            self.play(FadeIn(element4))  
+            self.wait(1)
+            self.remove(rect_around_b1)
 
         # 3. a in sequence
-        self.add(rect_around_a3)
-        self.wait(2)
-        self.remove(0.5)
-        self.add(arrow1_red)
-        self.wait(2)
-        self.add(arrow4_green)
-        self.wait(1)
-        self.remove(arrow4_green)
-        self.remove(arrow1_red)
-        self.wait(1)
-        self.add(arrow1_red)
-        self.wait(1)
-        self.remove(rect_around_2)
-        self.wait(0.5)
-        self.add(rect_around_2)
-        self.wait(2)
-        element5 = nea_results_table.get_entries((1, 5))
-        self.play(FadeIn(element5))  
-        self.remove(rect_around_a3)
+        with self.voiceover(text="""Die vierte Eingabe ist 'a', wo wir wieder zwei Optionen haben.
+                             Wir bleiben jedoch bei unserer Option und wechseln zum Zustand 2"""):
+            self.add(rect_around_a3)
+            self.wait(1)
+            self.remove(0.5)
+            self.add(arrow1_red)
+            self.wait(1)
+            self.add(arrow4_green)
+            self.wait(1)
+            self.remove(arrow4_green)
+            self.remove(arrow1_red)
+            self.wait(1)
+            self.add(arrow1_red)
+            self.wait(2)
+            self.remove(rect_around_2)
+            self.wait(0.5)
+            self.add(rect_around_2)
+            self.wait(2)
+            element5 = nea_results_table.get_entries((1, 5))
+            self.play(FadeIn(element5))  
+            self.remove(rect_around_a3)
 
         # 2. b in sequence
-        self.add(rect_around_b2)
-        self.wait(2)
-        self.add(arrow2_red)
-        self.wait(2)
-        self.add(rect_around_3)
-        element6 = nea_results_table.get_entries((1, 6))
-        self.play(FadeIn(element6))
-        self.wait(2)
-        self.remove(rect_around_b2)
+        with self.voiceover(text="""Bei der fünften Eingabe 'b' erreichen wir den Endzustand 3,
+                                 und alle weiteren Eingaben führen ebenfalls zu diesem Zustand."""):
 
-        # 4. a in sequence
-        self.add(rect_around_a4)
-        self.wait(2)
-        self.add(arrow5_red)
-        self.wait(2)
-        self.remove(rect_around_3)
-        self.wait(0.5)
-        self.add(rect_around_3)
-        self.wait(1)
-        element7= nea_results_table.get_entries((1, 7))
-        self.play(FadeIn(element7))
-        self.wait(2)
-        self.remove(rect_around_a4)
+            self.add(rect_around_b2)
+            self.wait(2)
+            self.add(arrow2_red)
+            self.wait(2)
+            self.add(rect_around_3)
+            element6 = nea_results_table.get_entries((1, 6))
+            self.play(FadeIn(element6))
+            self.wait(2)
+            self.remove(rect_around_b2)
 
-        # add chekmark at the end of the sequence
-        checkmark = Text("✓", font_size=50, color=GREEN).next_to(text_sequence, RIGHT)
-        self.add(checkmark)
-        self.wait(4)
-        self.remove(rect_around_a1,rect_around_a2,rect_around_a3,rect_around_a4, rect_around_b1,
-                     rect_around_b2, rect_around_1, rect_around_2, rect_around_3, arrow1_red, 
-                     arrow2_red, arrow3_red, arrow4_red, arrow5_red, nea_results_table, checkmark,
-                     element, element2, element3, element4, element5, element6, element7)
-        self.wait(2) 
+            # 4. a in sequence
+            self.add(rect_around_a4)
+            self.wait(1)
+            self.add(arrow5_red)
+            self.wait(1)
+            self.remove(rect_around_3)
+            self.wait(0.5)
+            self.add(rect_around_3)
+            self.wait(1)
+            element7= nea_results_table.get_entries((1, 7))
+            self.play(FadeIn(element7))
+            self.wait(2)
+            self.remove(rect_around_a4)
+
+        with self.voiceover(text="Somit haben wir die Sequenz abgearbeitet und können einen Check eintragen!"):
+            # add chekmark at the end of the sequence
+            checkmark = Text("✓", font_size=50, color=GREEN).next_to(text_sequence, RIGHT)
+            self.wait(2)
+            self.add(checkmark)
+            self.wait(3)
+            self.remove(rect_around_a1,rect_around_a2,rect_around_a3,rect_around_a4, rect_around_b1,
+                        rect_around_b2, rect_around_1, rect_around_2, rect_around_3, arrow1_red, 
+                        arrow2_red, arrow3_red, arrow4_red, arrow5_red, nea_results_table, checkmark,
+                        element, element2, element3, element4, element5, element6, element7)
+            self.wait(2) 
 
         ################################################################
         # go through the sequence in the Übergangstabelle
@@ -1146,143 +1170,137 @@ class Main(MovingCameraScene):
 
         # crate nea results table
         self.add(rect_around_1_green)
-        self.wait(2)  
+        self.wait(5)  
         element1 = nea_results_table_2.get_entries((1, 1))
-        self.play(FadeIn(element1))
-        self.wait(2)
+
+        with self.voiceover(text="""Lass uns nun die gleiche Sequenz durchgehen, aber dieses Mal wählen wir die andere Option für den Übergang des Folgezustandes. Unser Anfangszustand bleibt der gleiche, also „1“ """):
+            self.play(FadeIn(element1))
+            self.wait(1)
 
         # 1. a in sequence
-        self.add(rect_around_a1_green)
-        self.wait(2)
-        self.add(arrow1_green)
-        self.wait(1)
-        self.add(arrow4_green)
-        self.wait(1)
-        self.remove(arrow4_green)
-        self.remove(arrow1_green)
-        self.wait(1)
-        self.add(arrow4_green)
-        self.wait(0.5)
-        self.remove(rect_around_1_green)
-        self.wait(0.5)
-        self.add(rect_around_1_green)
-        self.wait(2)
-        element2 = nea_results_table_2.get_entries((1, 2))
-        self.play(FadeIn(element2))        
-        self.wait(2)
-        self.remove(rect_around_a1_green)
+        with self.voiceover(text="""Bei der ersten Eingabe „a“ haben wir, wie schon erwähnt, zwei verschiedene Übergangsmöglichkeiten.
+                                Da wir im ersten Durchlauf den Folgezustand „2“ ausgewählt haben, nehmen wir hier den anderen Übergang, 
+                                also bleiben wir im Zustand „1“."""):
+            self.wait(3)
+            self.add(rect_around_a1_green)
+            self.wait(2)
+            self.add(arrow1_green)
+            self.wait(1)
+            self.add(arrow4_green)
+            self.wait(1)
+            self.remove(arrow4_green)
+            self.remove(arrow1_green)
+            self.wait(1)
+            self.add(arrow4_green)
+            self.wait(2)
+            self.remove(rect_around_1_green)
+            self.wait(1)
+            self.add(rect_around_1_green)
+            self.wait(2)
+            element2 = nea_results_table_2.get_entries((1, 2))
+            self.play(FadeIn(element2))        
+            self.wait(3)
+            self.remove(rect_around_a1_green)
 
         # 2. a in sequence
-        self.add(rect_around_a2_green)
-        self.wait(2)
-        self.remove(arrow4_green)
-        self.wait(0.5)
-        self.add(arrow4_green)
-        self.wait(0.5)
-        self.add(arrow1_green)
-        self.wait(1)
-        self.add(rect_around_2_green)
-        element3 = nea_results_table_2.get_entries((1, 3))
-        self.play(FadeIn(element3))      
-        self.wait(2)
-        self.remove(rect_around_a2_green)
+        with self.voiceover(text="""Bei der zweiten Eingabe „a“ stehen uns erneut zwei Möglichkeiten zur Verfügung:
+                                 entweder im Zustand „1“ zu verbleiben oder zum Zustand „2“ zu wechseln.  Wir entscheiden
+                                 uns für die zweite Option und wechseln zum Zustand „2“."""):
+            self.add(rect_around_a2_green)
+            self.wait(2)
+            self.remove(arrow4_green)
+            self.wait(1)
+            self.add(arrow4_green)
+            self.wait(2)
+            self.add(arrow1_green)
+            self.wait(1)
+            self.add(rect_around_2_green)
+            element3 = nea_results_table_2.get_entries((1, 3))
+            self.play(FadeIn(element3))      
+            self.wait(2)
+            self.remove(rect_around_a2_green)
 
         # 1. b in sequence
-        self.add(rect_around_b1_green)
-        self.wait(2)
-        self.add(arrow2_green)
-        self.wait(2)
-        self.add(rect_around_3_green)
-        element4 = nea_results_table_2.get_entries((1, 4))
-        self.play(FadeIn(element4))
-        self.wait(2)
-        self.remove(rect_around_b1_green)
+        with self.voiceover(text=" Bei der dritten Eingabe, also „b“, haben wir nur eine Übergangsmöglichkeit und wechseln zum Zustand „3“, welcher unser Endzustand ist. Wie bereits erwähnt, führen in diesem Beispiel, nachdem der Endzustand erreicht wurde, alle weiteren Eingaben zum gleichen Endzustand als Folgezustand."):
+
+            self.add(rect_around_b1_green)
+            self.wait(3)
+            self.add(arrow2_green)
+            self.wait(2)
+            self.add(rect_around_3_green)
+            element4 = nea_results_table_2.get_entries((1, 4))
+            self.play(FadeIn(element4))
+            self.wait(2)
+            self.remove(rect_around_b1_green)
 
         # 3. a in sequence
-        self.add(rect_around_a3_green)
-        self.wait(2)
-        self.add(arrow5_green)
-        self.wait(2)
-        self.remove(rect_around_3_green)
-        self.wait(0.5)
-        self.add(rect_around_3_green)
-        self.wait(1)
-        element5= nea_results_table_2.get_entries((1, 5))
-        self.play(FadeIn(element5))
-        self.wait(2)
-        self.remove(rect_around_a3_green)
-
+        with self.voiceover(text="Das heißt, die Eingabe „a“ resultiert im Folgezustand „3“, ebenso wie die Eingabe „b“, und auch die letzte Eingabe „a“ führt zum Zustand „3“."):
+            self.add(rect_around_a3_green)
+            self.wait(2)
+            self.add(arrow5_green)
+            self.wait(1)
+            self.remove(rect_around_3_green)
+            self.wait(0.5)
+            self.add(rect_around_3_green)
+            self.wait(1)
+            element5= nea_results_table_2.get_entries((1, 5))
+            self.play(FadeIn(element5))
+            self.wait(1)
+            self.remove(rect_around_a3_green)
 
         # 2. b in sequence
-        self.add(rect_around_b2_green)
-        self.wait(2)
-        self.add(arrow5_green)
-        self.wait(2)
-        self.remove(rect_around_3_green)
-        self.wait(0.5)
-        self.add(rect_around_3_green)
-        self.wait(1)
-        element6= nea_results_table_2.get_entries((1, 6))
-        self.play(FadeIn(element6))
-        self.wait(2)
-        self.remove(rect_around_b2_green)
-
-        # 4. a in sequenc
-        self.add(rect_around_a4_green)
-        self.wait(2)
-        self.add(arrow5_green)
-        self.wait(2)
-        self.remove(rect_around_3_green)
-        self.wait(0.5)
-        self.add(rect_around_3_green)
-        self.wait(1)
-        element7= nea_results_table_2.get_entries((1, 7))
-        self.play(FadeIn(element7))
-        self.wait(2)
-        self.remove(rect_around_a4_green)
+            self.add(rect_around_b2_green)
+            self.wait(1)
+            self.add(arrow5_green)
+            self.wait(1)
+            self.remove(rect_around_3_green)
+            self.wait(0.5)
+            self.add(rect_around_3_green)
+            self.wait(1)
+            element6= nea_results_table_2.get_entries((1, 6))
+            self.play(FadeIn(element6))
+            self.wait(2)
+            self.remove(rect_around_b2_green)
+        
+            # 4. a in sequenc
+            self.add(rect_around_a4_green)
+            self.wait(1)
+            self.add(arrow5_green)
+            self.wait(1)
+            self.remove(rect_around_3_green)
+            self.wait(0.5)
+            self.add(rect_around_3_green)
+            self.wait(1)
+            element7= nea_results_table_2.get_entries((1, 7))
+            self.play(FadeIn(element7))
+            self.wait(1)
+            self.remove(rect_around_a4_green)
         
         nea_results_table_2.set_color(GREEN)
         self.play(Create(nea_results_table_2))
         self.wait(1)
-        # add chekmark at the end of the sequence
-        checkmark2 = Text("✓", font_size=50, color=GREEN).next_to(text_sequence, RIGHT)
-        self.add(checkmark2)
-        self.remove(checkmark2)
 
-        self.wait(4)
+
+        with self.voiceover(text="Auch hier, sind wir fertig und wir tragen einen Check ein!"):
+        # add chekmark at the end of the sequence
+            checkmark2 = Text("✓", font_size=50, color=GREEN).next_to(text_sequence, RIGHT)
+            self.add(checkmark2)
+            self.remove(checkmark2)
+            self.wait(4)
+
         example_group = Group(text_sequence, nea_results_table_2, self.nea_all_elements, 
                         rect_around_1_green, rect_around_2_green, rect_around_3_green,
                         arrow1_green, arrow2_green, arrow3_green, arrow4_green, arrow5_green)
         
-        self.play(example_group.animate.move_to(UP))
-        self.wait(1)
+        with self.voiceover(text="Vergleicht man die resultierenden Zustände beider Durchläufe, sieht man, dass man beim NEA im Vergleich zum DEA verschiedene Wege zum Endzustand und somit auch verschiedene resultierende Zustände hat. Das bedeutet, dass eine Sequenz akzeptiert wird, wenn es einen Weg zum Endzustand gibt. In unserem Beispiel gibt es nicht nur einen, sondern mehrere solche Wege."):
+            self.play(example_group.animate.move_to(UP))
+            self.wait(1)
 
-        nea_results_table.next_to(nea_results_table_2, DOWN, buff = 0.7)
-        nea_results_table.set_color(RED)
-        self.play(FadeIn(nea_results_table))
-        self.wait(1)
+            nea_results_table.next_to(nea_results_table_2, DOWN, buff = 0.7)
+            nea_results_table.set_color(RED)
+            self.play(FadeIn(nea_results_table))
+            self.wait(1)
         
 #########################################################
 #########################DEA&NEA#########################
 #########################################################
-
-    #def dea_vs_nea(self):
-
-        # versus
-        ##self.play(FadeIn(versus_text))
-
-
-        # DEA graph
-        #self.play(FadeIn(dea_graph))
-        #self.wait(2)  
-
-        # a line as divider 
-        #self.play(Create(divider_line))
-
-
-        
-        # move nea - right
-        #self.play(self.nea_all_elements.animate.scale(0.6).to_edge(RIGHT, buff=0.5))
-        # move title to graph
-        #self.play(self.nea.animate.scale(0.7).to_edge(RIGHT, buff=2.8))
-        #self.add(Text("DEA", font_size= 50).scale(0.7).to_edge(UP).to_edge(LEFT, buff=2.8))
