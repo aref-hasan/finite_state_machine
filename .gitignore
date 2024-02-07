@@ -1,6 +1,7 @@
 extras
 media 
 playground/media
+playground/media/.env
 playground/__pycache__
 project/media
 project/__pycache__
