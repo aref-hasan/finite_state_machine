@@ -10,5 +10,5 @@ WWI-21-DSA
 
 
 ### Manim:
-Manim: https://github.com/3b1b/manim
-
+was created using the Python library Manim.:
+https://github.com/3b1b/manim
