@@ -8,8 +8,6 @@ by students at The Baden-Württemberg Cooperative State University (DHBW) Mannhe
 
 WWI-21-DSA
 
-### Endliche Zustandautomaten 
-
 ### Manim:
 Manim: https://github.com/3b1b/manim
 
