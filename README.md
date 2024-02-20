@@ -8,7 +8,6 @@ Aref Hasan
 
 WWI-21-DSA
 
-### Endliche Zustandautomaten 
 
 ### Manim:
 Manim: https://github.com/3b1b/manim
