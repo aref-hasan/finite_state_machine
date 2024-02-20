@@ -1,0 +1,7 @@
+manim
+cv2
+manim_voiceover
+manim.scene.moving_camera_scene
+manim_voiceover.services.gtts
+sympy
+numpy
